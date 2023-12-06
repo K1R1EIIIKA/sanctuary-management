@@ -5,7 +5,7 @@ export class FetchData extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { forecasts: [], loading: true };
+    this.state = { forecasts: [], capybaras: [], loading: true };
   }
 
   componentDidMount() {
@@ -34,7 +34,7 @@ export class FetchData extends Component {
           )}
         </tbody>
       </table>
-    );
+  );
   }
 
   render() {
@@ -55,5 +55,11 @@ export class FetchData extends Component {
     const response = await fetch('weatherforecast');
     const data = await response.json();
     this.setState({ forecasts: data, loading: false });
+  }
+  
+  async populateCapybaraData() {
+    const response = await fetch('capybara');
+    const data = await response.json();
+    this.setState({ capybaras: data, loading: false });
   }
 }

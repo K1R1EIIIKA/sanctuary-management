@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Project1.Models;
 using Project1.Models.Animals;
+using Project1.Models.People;
+using Project1.Models.Structure;
 
 namespace Project1.Data;
 
@@ -13,6 +15,10 @@ public class AppDbContext : DbContext
     
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Customer> Customers { get; set; }
+    
+    public DbSet<Sanctuary> Sanctuaries { get; set; }
+    public DbSet<Event> Events { get; set; }
+    // TODO: oncreatingmodel
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
