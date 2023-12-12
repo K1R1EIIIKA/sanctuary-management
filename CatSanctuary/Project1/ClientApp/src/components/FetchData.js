@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {SanctuaryList} from "./SanctuaryList";
 
 export class FetchData extends Component {
   static displayName = FetchData.name;
@@ -84,6 +85,8 @@ export class FetchData extends Component {
           <p>This component demonstrates fetching data from the server.</p>
           {capybaras}
         </div>
+        
+        <SanctuaryList />
       </div>
     );
   }

@@ -2,11 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using Project1.Models.Animals;
 using Project1.Models.People;
 using Project1.Models.Structure;
+using Project1.Models.Templates;
 
 namespace Project1.Models;
 
 public class AppDbContext : DbContext
 {
+    public DbSet<Animal> Animals { get; set; }
     public DbSet<Cat> Cats { get; set; }
     public DbSet<Bird> Birds { get; set; }
     public DbSet<Shark> Sharks { get; set; }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Project1.Models.Structure;
 
 namespace Project1.Models.Templates;
@@ -14,5 +15,6 @@ public class Animal
     [ForeignKey("Sanctuary")]
     public int SanctuaryId { get; set; }
     
+    [JsonIgnore]
     public Sanctuary Sanctuary { get; set; }
 }
