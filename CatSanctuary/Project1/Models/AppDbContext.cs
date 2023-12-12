@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Project1.Models;
 using Project1.Models.Animals;
 using Project1.Models.People;
 using Project1.Models.Structure;
 
-namespace Project1.Data;
+namespace Project1.Models;
 
 public class AppDbContext : DbContext
 {
@@ -18,7 +17,11 @@ public class AppDbContext : DbContext
     
     public DbSet<Sanctuary> Sanctuaries { get; set; }
     public DbSet<Event> Events { get; set; }
-    // TODO: oncreatingmodel
+    
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+        Database.EnsureCreated();
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

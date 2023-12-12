@@ -6,8 +6,5 @@ namespace Project1.Models.Animals;
 
 public class Capybara : Animal
 {
-    [ForeignKey("Sanctuary")]
-    public int SanctuaryId { get; set; }
     
-    public Sanctuary Sanctuary { get; set; }
 }
