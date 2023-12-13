@@ -51,7 +51,6 @@ public class SanctuaryController : ControllerBase
             }
         }
 
-        _context.Update(sanctuary);
         _context.SaveChanges();
 
         return _context.Sanctuaries.ToList();
