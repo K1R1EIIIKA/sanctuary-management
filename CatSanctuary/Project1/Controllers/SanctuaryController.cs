@@ -46,8 +46,9 @@ public class SanctuaryController : ControllerBase
             Weight = 10,
             Height = 10,
             TangerineCount = 150,
-            Type = "Capybara",
+            ColorId = -1
         };
+        
         Capybara newwCapybara = new Capybara
         {
             Name = "UniqueName" + Guid.NewGuid(),
@@ -56,7 +57,7 @@ public class SanctuaryController : ControllerBase
             Weight = 10,
             Height = 10,
             TangerineCount = 150,
-            Type = "Capybara",
+            ColorId = -1
         };
         _context.Capybaras.Add(newCapybara);
         _context.Capybaras.Add(newwCapybara);
@@ -65,7 +66,6 @@ public class SanctuaryController : ControllerBase
         {
             Name = "UniqueName" + Guid.NewGuid(),
             BirthDate = new DateTime(2019, 1, 1),
-            Type = "Shark",
             Length = 320,
             HasDeviations = false,
             IsMale = true,

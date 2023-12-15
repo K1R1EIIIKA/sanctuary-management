@@ -1,23 +1,64 @@
 /* Provide sufficient contrast against white background */
+
+@font-face {
+    font-family: 'Gilroy ExtraBold';
+    font-style: normal;
+    src: url('components/Fonts/Gilroy-Extrabold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Gilroy Regular';
+    font-style: normal;
+    src: url('components/Fonts/Gilroy-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Gilroy Medium';
+    font-style: normal;
+    src: url('components/Fonts/Gilroy-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat ExtraBold';
+    font-style: normal;
+    src: url('components/Fonts/Montserrat-ExtraBold.ttf') format('truetype');
+}
+
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 code {
-  color: #E01A76;
+    color: #E01A76;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .object-center {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .link {
-  text-decoration: none;
-  color: #212121;
+    text-decoration: none;
+    color: #212121;
+}
+
+.text-gilroy-extrabold {
+    font-family: 'Gilroy ExtraBold', serif;
+}
+
+.text-gilroy-regular {
+    font-family: 'Gilroy Regular', serif;
+}
+
+.text-gilroy-medium {
+    font-family: 'Gilroy Medium', serif;
+}
+
+.text-montserrat {
+    font-family: 'Montserrat ExtraBold', serif;
 }

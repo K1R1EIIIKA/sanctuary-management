@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project1.Models;
 
@@ -10,9 +11,11 @@ using Project1.Models;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231215163837_ertyukl")]
+    partial class ertyukl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,91 +182,97 @@ namespace Project1.Migrations
                         {
                             Id = -1,
                             Hex = "#000000",
-                            Name = "Черный"
+                            Name = "Black"
                         },
                         new
                         {
                             Id = -2,
                             Hex = "#FFFFFF",
-                            Name = "Белый"
+                            Name = "White"
                         },
                         new
                         {
                             Id = -3,
                             Hex = "#FF0000",
-                            Name = "Красный"
+                            Name = "Red"
                         },
                         new
                         {
                             Id = -4,
                             Hex = "#00FF00",
-                            Name = "Зеленый"
+                            Name = "Green"
                         },
                         new
                         {
                             Id = -5,
                             Hex = "#0000FF",
-                            Name = "Синий"
+                            Name = "Blue"
                         },
                         new
                         {
                             Id = -6,
                             Hex = "#FFFF00",
-                            Name = "Желтый"
+                            Name = "Yellow"
                         },
                         new
                         {
                             Id = -7,
                             Hex = "#00FFFF",
-                            Name = "Бирюзовый"
+                            Name = "Cyan"
                         },
                         new
                         {
                             Id = -8,
                             Hex = "#FF00FF",
-                            Name = "Малиновый"
+                            Name = "Magenta"
                         },
                         new
                         {
                             Id = -9,
                             Hex = "#C0C0C0",
-                            Name = "Серебряный"
+                            Name = "Silver"
                         },
                         new
                         {
                             Id = -10,
                             Hex = "#808080",
-                            Name = "Серый"
+                            Name = "Gray"
                         },
                         new
                         {
                             Id = -11,
                             Hex = "#800000",
-                            Name = "Бордовый"
+                            Name = "Maroon"
                         },
                         new
                         {
                             Id = -12,
                             Hex = "#808000",
-                            Name = "Оливковый"
+                            Name = "Olive"
+                        },
+                        new
+                        {
+                            Id = -13,
+                            Hex = "#008000",
+                            Name = "Green"
                         },
                         new
                         {
                             Id = -14,
                             Hex = "#800080",
-                            Name = "Фиолетовый"
+                            Name = "Purple"
                         },
                         new
                         {
                             Id = -15,
                             Hex = "#008080",
-                            Name = "Морской"
+                            Name = "Teal"
                         },
                         new
                         {
                             Id = -16,
                             Hex = "#000080",
-                            Name = "Ультрамариновый"
+                            Name = "Navy"
                         });
                 });
 

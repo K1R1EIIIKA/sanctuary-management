@@ -63,18 +63,20 @@ function dateToString(birthDate) {
 }
 
 const getCapybaras = (sanctuary, capybaras) => {
+  console.log(capybaras)
   return <div className={'col-6'}>
     <h3 className={'text-center'}>Капибары</h3><br/>
     {capybaras.map(animal => (
       <div key={animal.id}> 
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
-          <h5 className={'text-center'}>{animal.name}</h5>
+          <h5 className={'text-center mb-3'}>{animal.name}</h5>
           {/*<h6>{animal.id}</h6>*/}
-          <h6>Дата рождения: {dateToString(animal.birthDate)}</h6>
-          <h6>Пол: {animal.isMale ? 'Мужской' : 'Женский'}</h6>
-          <h6>Есть отклонения: {animal.hasDeviations ? 'Да' : 'Нет'}</h6>
+          <h6 className={'mb-1'}>Дата рождения: {dateToString(animal.birthDate)}</h6>
+          <h6 className={'mb-1'}>Цвет: {animal.color}</h6>
+          <h6 className={'mb-1'}>Пол: {animal.isMale ? 'Мужской' : 'Женский'}</h6>
+          <h6 className={'mb-1'}>Есть отклонения: {animal.hasDeviations ? 'Да' : 'Нет'}</h6>
         </a>
-        <button className={'btn btn-primary'} onClick={() => {
+        <button className={'btn btn-primary mt-2'} onClick={() => {
           fetch(`sanctuary/${sanctuary.id}/animal/${animal.id}`, {
             method: 'DELETE',
           })

@@ -16,17 +16,26 @@ export class Sanctuaries extends Component {
     return (
       <div className={'container'}>
 
-        {sanctuaries.map(sanctuary =>
-          <div className={'col-6 object-center'}>
-            <a className={'link'} href={'sanctuaries/' + sanctuary.id}>
-              <h3 className={'text-center'}>{sanctuary.name}</h3>
-              <h5 className={'text-center'}>{sanctuary.address}</h5>
-              <h5 className={'text-center'}>{Sanctuaries.getAnimalCount(sanctuary)}</h5>
-              <p className={'text-center'}>{sanctuary.description}</p>
-              <br/>
-            </a>
-          </div>
-        )}
+        <div className={'row'}>
+
+          <div className={'col-10 object-center'}>
+            <div className={'row'}>
+              <hr className={'mb-4'}/>
+            {sanctuaries.map(sanctuary =>
+              <div className={'col-6 object-center'}>
+                <a className={'link'} href={'sanctuaries/' + sanctuary.id}>
+                  <h3 className={'text-center text-gilroy-extrabold'}>{sanctuary.name}</h3>
+                  <h5 className={'text-center text-gilroy-medium'}>{sanctuary.address}</h5>
+                  <h5 className={'text-center text-gilroy-medium'}>{Sanctuaries.getAnimalCount(sanctuary)}</h5>
+                  <p className={'text-center text-gilroy-regular'}>{sanctuary.description}</p>
+                  <br/>
+                </a>
+              </div>
+            )}
+            </div>
+
+        </div>
+        </div>
         
       </div>
     );
@@ -46,7 +55,7 @@ export class Sanctuaries extends Component {
 
     return (
       <div className={'container'}>
-        <h1 id="tabelLabel" className={'text-center'}>Все приюты</h1><br/>
+        <h1 id="tabelLabel" className={'text-center text-montserrat'}>Все приюты</h1><br/>
         {contents}
       </div>
     );

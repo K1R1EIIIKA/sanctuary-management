@@ -4,5 +4,5 @@ namespace Project1.Models.People;
 
 public class Customer : Person
 {
-    
+    public double Salary { get; set; }
 }

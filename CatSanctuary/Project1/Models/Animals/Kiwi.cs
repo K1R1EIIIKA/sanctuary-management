@@ -7,7 +7,5 @@ namespace Project1.Models.Animals;
 
 public class Kiwi : Animal, IFlying
 {
-    public override string Type => "Kiwi";
-    
     public int KiwiEaten { get; set; }
 }

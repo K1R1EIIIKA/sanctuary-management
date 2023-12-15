@@ -11,8 +11,8 @@ using Project1.Models;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231215124928_vcv bnm,")]
-    partial class vcvbnm
+    [Migration("20231215155925_s")]
+    partial class s
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,9 @@ namespace Project1.Migrations
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<double>("Salary")
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -160,11 +163,128 @@ namespace Project1.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("Project1.Models.Templates.Color", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Hex")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Colors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Hex = "#000000",
+                            Name = "Black"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Hex = "#FFFFFF",
+                            Name = "White"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Hex = "#FF0000",
+                            Name = "Red"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            Hex = "#00FF00",
+                            Name = "Green"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            Hex = "#0000FF",
+                            Name = "Blue"
+                        },
+                        new
+                        {
+                            Id = -6,
+                            Hex = "#FFFF00",
+                            Name = "Yellow"
+                        },
+                        new
+                        {
+                            Id = -7,
+                            Hex = "#00FFFF",
+                            Name = "Cyan"
+                        },
+                        new
+                        {
+                            Id = -8,
+                            Hex = "#FF00FF",
+                            Name = "Magenta"
+                        },
+                        new
+                        {
+                            Id = -9,
+                            Hex = "#C0C0C0",
+                            Name = "Silver"
+                        },
+                        new
+                        {
+                            Id = -10,
+                            Hex = "#808080",
+                            Name = "Gray"
+                        },
+                        new
+                        {
+                            Id = -11,
+                            Hex = "#800000",
+                            Name = "Maroon"
+                        },
+                        new
+                        {
+                            Id = -12,
+                            Hex = "#808000",
+                            Name = "Olive"
+                        },
+                        new
+                        {
+                            Id = -13,
+                            Hex = "#008000",
+                            Name = "Green"
+                        },
+                        new
+                        {
+                            Id = -14,
+                            Hex = "#800080",
+                            Name = "Purple"
+                        },
+                        new
+                        {
+                            Id = -15,
+                            Hex = "#008080",
+                            Name = "Teal"
+                        },
+                        new
+                        {
+                            Id = -16,
+                            Hex = "#000080",
+                            Name = "Navy"
+                        });
+                });
+
             modelBuilder.Entity("Project1.Models.Animals.Capybara", b =>
                 {
                     b.HasBaseType("Project1.Models.Templates.Animal");
 
-                    b.Property<int>("Color")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<double>("Height")
@@ -178,8 +298,8 @@ namespace Project1.Migrations
 
                     b.ToTable("Animals", t =>
                         {
-                            t.Property("Color")
-                                .HasColumnName("Capybara_Color");
+                            t.Property("ColorId")
+                                .HasColumnName("Capybara_ColorId");
 
                             t.Property("Height")
                                 .HasColumnName("Capybara_Height");
@@ -195,7 +315,7 @@ namespace Project1.Migrations
                 {
                     b.HasBaseType("Project1.Models.Templates.Animal");
 
-                    b.Property<int>("Color")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<double>("Height")
@@ -206,8 +326,8 @@ namespace Project1.Migrations
 
                     b.ToTable("Animals", t =>
                         {
-                            t.Property("Color")
-                                .HasColumnName("Cat_Color");
+                            t.Property("ColorId")
+                                .HasColumnName("Cat_ColorId");
                         });
 
                     b.HasDiscriminator().HasValue("Cat");
@@ -227,7 +347,7 @@ namespace Project1.Migrations
                 {
                     b.HasBaseType("Project1.Models.Templates.Animal");
 
-                    b.Property<int>("Color")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<double>("Length")

@@ -5,7 +5,7 @@
 namespace Project1.Migrations
 {
     /// <inheritdoc />
-    public partial class h : Migration
+    public partial class ertyukl : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

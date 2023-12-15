@@ -13,17 +13,33 @@ public class AppDbContext : DbContext
     public DbSet<Kiwi> Kiwis { get; set; }
     public DbSet<Shark> Sharks { get; set; }
     public DbSet<Capybara> Capybaras { get; set; }
-    
+
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Customer> Customers { get; set; }
-    
+
     public DbSet<Sanctuary> Sanctuaries { get; set; }
     public DbSet<Event> Events { get; set; }
-    
+    public DbSet<Color> Colors { get; set; }
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
         Database.EnsureCreated();
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        Color.SetBaseColors(modelBuilder);
+
+        modelBuilder.Entity<Animal>()
+            .HasDiscriminator<string>("Type")
+            .HasValue<Cat>("Cat")
+            .HasValue<Kiwi>("Kiwi")
+            .HasValue<Shark>("Shark")
+            .HasValue<Capybara>("Capybara");
+    }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

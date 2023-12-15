@@ -11,8 +11,8 @@ using Project1.Models;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231215092206_ty")]
-    partial class ty
+    [Migration("20231215184314_j")]
+    partial class j
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,9 @@ namespace Project1.Migrations
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<double>("Salary")
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -102,6 +105,14 @@ namespace Project1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -120,10 +131,6 @@ namespace Project1.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<bool>("HasDeviations")
                         .HasColumnType("tinyint(1)");
 
@@ -137,22 +144,137 @@ namespace Project1.Migrations
                     b.Property<int>("SanctuaryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SanctuaryId");
 
                     b.ToTable("Animals");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Animal");
+                    b.HasDiscriminator<string>("Type").HasValue("Animal");
 
                     b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Project1.Models.Templates.Color", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Hex")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Colors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Hex = "#000000",
+                            Name = "Черный"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Hex = "#FFFFFF",
+                            Name = "Белый"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Hex = "#FF0000",
+                            Name = "Красный"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            Hex = "#00FF00",
+                            Name = "Зеленый"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            Hex = "#0000FF",
+                            Name = "Синий"
+                        },
+                        new
+                        {
+                            Id = -6,
+                            Hex = "#FFFF00",
+                            Name = "Желтый"
+                        },
+                        new
+                        {
+                            Id = -7,
+                            Hex = "#00FFFF",
+                            Name = "Бирюзовый"
+                        },
+                        new
+                        {
+                            Id = -8,
+                            Hex = "#FF00FF",
+                            Name = "Малиновый"
+                        },
+                        new
+                        {
+                            Id = -9,
+                            Hex = "#C0C0C0",
+                            Name = "Серебряный"
+                        },
+                        new
+                        {
+                            Id = -10,
+                            Hex = "#808080",
+                            Name = "Серый"
+                        },
+                        new
+                        {
+                            Id = -11,
+                            Hex = "#800000",
+                            Name = "Бордовый"
+                        },
+                        new
+                        {
+                            Id = -12,
+                            Hex = "#808000",
+                            Name = "Оливковый"
+                        },
+                        new
+                        {
+                            Id = -14,
+                            Hex = "#800080",
+                            Name = "Фиолетовый"
+                        },
+                        new
+                        {
+                            Id = -15,
+                            Hex = "#008080",
+                            Name = "Морской"
+                        },
+                        new
+                        {
+                            Id = -16,
+                            Hex = "#000080",
+                            Name = "Ультрамариновый"
+                        });
                 });
 
             modelBuilder.Entity("Project1.Models.Animals.Capybara", b =>
                 {
                     b.HasBaseType("Project1.Models.Templates.Animal");
 
-                    b.Property<int>("Color")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<double>("Height")
@@ -166,8 +288,8 @@ namespace Project1.Migrations
 
                     b.ToTable("Animals", t =>
                         {
-                            t.Property("Color")
-                                .HasColumnName("Capybara_Color");
+                            t.Property("ColorId")
+                                .HasColumnName("Capybara_ColorId");
 
                             t.Property("Height")
                                 .HasColumnName("Capybara_Height");
@@ -183,7 +305,7 @@ namespace Project1.Migrations
                 {
                     b.HasBaseType("Project1.Models.Templates.Animal");
 
-                    b.Property<int>("Color")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<double>("Height")
@@ -194,8 +316,8 @@ namespace Project1.Migrations
 
                     b.ToTable("Animals", t =>
                         {
-                            t.Property("Color")
-                                .HasColumnName("Cat_Color");
+                            t.Property("ColorId")
+                                .HasColumnName("Cat_ColorId");
                         });
 
                     b.HasDiscriminator().HasValue("Cat");
@@ -215,7 +337,7 @@ namespace Project1.Migrations
                 {
                     b.HasBaseType("Project1.Models.Templates.Animal");
 
-                    b.Property<int>("Color")
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<double>("Length")
