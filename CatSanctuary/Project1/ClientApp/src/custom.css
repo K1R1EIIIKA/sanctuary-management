@@ -12,3 +12,12 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.object-center {
+  margin: 0 auto;
+}
+
+.link {
+  text-decoration: none;
+  color: #212121;
+}

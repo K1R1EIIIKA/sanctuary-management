@@ -10,6 +10,8 @@ public class Animal
     
     public string Name { get; set; }
     
+    public virtual string Type { get; set; }
+    
     public DateTime BirthDate { get; set; }
     
     public bool IsMale { get; set; }

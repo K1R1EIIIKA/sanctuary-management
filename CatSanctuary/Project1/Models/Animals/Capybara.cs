@@ -7,6 +7,7 @@ namespace Project1.Models.Animals;
 
 public class Capybara : Animal, IMammalian
 {
+    public override string Type => "Capybara";
     public int TangerineCount { get; set; }
     
     public Color Color { get; set; }

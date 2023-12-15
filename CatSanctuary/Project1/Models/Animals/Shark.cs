@@ -7,6 +7,9 @@ namespace Project1.Models.Animals;
 
 public class Shark : Animal, ISwimming
 {
+    public override string Type => "Shark";
+    
     public Color Color { get; set; }
+    
     public double Length { get; set; }
 }

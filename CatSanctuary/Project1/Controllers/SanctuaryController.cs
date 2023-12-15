@@ -30,7 +30,9 @@ public class SanctuaryController : ControllerBase
         Sanctuary sanctuary = new Sanctuary
         {
             Name = "Сапожок",
-            Animals = new List<Animal>()
+            Animals = new List<Animal>(),
+            Description = "Самый лучший зоопарк в мире",
+            Address = "Москва, ул. Пушкина, дом Колотушкина"
         };
 
         _context.Sanctuaries.Add(sanctuary);
@@ -40,9 +42,37 @@ public class SanctuaryController : ControllerBase
         {
             Name = "UniqueName" + Guid.NewGuid(),
             BirthDate = new DateTime(2019, 1, 1),
-            SanctuaryId = sanctuary.Id 
+            SanctuaryId = sanctuary.Id,
+            Weight = 10,
+            Height = 10,
+            TangerineCount = 150,
+            Type = "Capybara",
+        };
+        Capybara newwCapybara = new Capybara
+        {
+            Name = "UniqueName" + Guid.NewGuid(),
+            BirthDate = new DateTime(2019, 1, 1),
+            SanctuaryId = sanctuary.Id,
+            Weight = 10,
+            Height = 10,
+            TangerineCount = 150,
+            Type = "Capybara",
         };
         _context.Capybaras.Add(newCapybara);
+        _context.Capybaras.Add(newwCapybara);
+
+        Shark newShark = new Shark
+        {
+            Name = "UniqueName" + Guid.NewGuid(),
+            BirthDate = new DateTime(2019, 1, 1),
+            Type = "Shark",
+            Length = 320,
+            HasDeviations = false,
+            IsMale = true,
+            SanctuaryId = sanctuary.Id,
+        };
+        
+        _context.Sharks.Add(newShark);
 
         foreach (var animal in _context.Animals)
         {
@@ -56,22 +86,22 @@ public class SanctuaryController : ControllerBase
 
         return _context.Sanctuaries.ToList();
     }
-    
+
     [HttpGet("{id}")]
     public ActionResult<Sanctuary> GetById(int id)
     {
         var sanctuary = _context.Sanctuaries
-            .Include(s => s.Animals) 
+            .Include(s => s.Animals)
             .FirstOrDefault(s => s.Id == id);
 
         if (sanctuary == null)
         {
-            return NotFound(); 
+            return NotFound();
         }
 
         return sanctuary;
     }
-    
+
     [HttpGet("{id}/animal")]
     public ActionResult<IEnumerable<object>> GetAnimals(int id)
     {
@@ -79,7 +109,7 @@ public class SanctuaryController : ControllerBase
 
         if (sanctuary == null)
         {
-            return NotFound(); 
+            return NotFound();
         }
 
         var capybaras = _context.Capybaras.Where(c => c.SanctuaryId == id).ToList();
@@ -95,7 +125,7 @@ public class SanctuaryController : ControllerBase
 
         return allAnimals;
     }
-    
+
     [HttpGet("{id}/animal/{animalId}")]
     public ActionResult<object> GetAnimalById(int id, int animalId)
     {
@@ -103,7 +133,7 @@ public class SanctuaryController : ControllerBase
 
         if (sanctuary == null)
         {
-            return NotFound(); 
+            return NotFound();
         }
 
         var capybara = _context.Capybaras.FirstOrDefault(c => c.Id == animalId && c.SanctuaryId == id);
@@ -111,25 +141,6 @@ public class SanctuaryController : ControllerBase
         var kiwi = _context.Kiwis.FirstOrDefault(k => k.Id == animalId && k.SanctuaryId == id);
         var cat = _context.Cats.FirstOrDefault(ct => ct.Id == animalId && ct.SanctuaryId == id);
 
-        if (capybara != null)
-        {
-            return capybara;
-        }
-        else if (shark != null)
-        {
-            return shark;
-        }
-        else if (kiwi != null)
-        {
-            return kiwi;
-        }
-        else if (cat != null)
-        {
-            return cat;
-        }
-        else
-        {
-            return NotFound();
-        }
+        return capybara ?? shark ?? kiwi ?? cat ?? (ActionResult<object>)NotFound();
     }
 }
