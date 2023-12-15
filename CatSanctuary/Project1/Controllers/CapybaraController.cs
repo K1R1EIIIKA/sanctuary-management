@@ -26,17 +26,7 @@ namespace Project1.Controllers
         public IEnumerable<Capybara> Get()
         {
             int sanctuaryId = 1;
-            // Capybara capybara = new Capybara
-            // {
-            //     Name = "Сапожок",
-            //     BirthDate = new DateTime(2019, 1, 1),
-            //     SanctuaryId = sanctuaryId
-            // };
-            // _context.Capybaras.Add(capybara);
-            // add copybara to sanctuary
-            // _context.Sanctuaries.Find(1).Animals.Add(capybara);
-            // _context.SaveChanges();
-            
+
             return _context.Capybaras.ToList();
         }
     }

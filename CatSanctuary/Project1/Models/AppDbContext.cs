@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
 {
     public DbSet<Animal> Animals { get; set; }
     public DbSet<Cat> Cats { get; set; }
-    public DbSet<Bird> Birds { get; set; }
+    public DbSet<Kiwi> Kiwis { get; set; }
     public DbSet<Shark> Sharks { get; set; }
     public DbSet<Capybara> Capybaras { get; set; }
     

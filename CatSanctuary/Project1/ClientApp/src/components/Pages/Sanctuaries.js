@@ -55,8 +55,7 @@ export class Sanctuaries extends Component {
 
     return (
       <div>
-        <h1 id="tabelLabel">Sanctuary List</h1>
-        <p>This component demonstrates fetching data from the server.</p>
+        <h1 id="tabelLabel">Все приюты</h1>
         {contents}
       </div>
     );

@@ -12,6 +12,10 @@ public class Animal
     
     public DateTime BirthDate { get; set; }
     
+    public bool IsMale { get; set; }
+    
+    public bool HasDeviations { get; set; }
+    
     [ForeignKey("Sanctuary")]
     public int SanctuaryId { get; set; }
     

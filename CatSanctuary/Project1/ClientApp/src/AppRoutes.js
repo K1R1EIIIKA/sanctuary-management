@@ -1,8 +1,10 @@
-import {Counter} from "./components/Counter";
-import {FetchData} from "./components/FetchData";
-import {Home} from "./components/Home";
-import {SanctuaryList} from "./components/SanctuaryList";
-import {Sanctuaries} from "./components/Sanctuaries";
+import {Home} from "./components/Pages/Home";
+import {Counter} from "./components/Pages/Counter";
+import {FetchData} from "./components/Pages/FetchData";
+import {Sanctuaries} from "./components/Pages/Sanctuaries";
+import Sanctuary from "./components/Pages/Tables/Sanctuary";
+import Animal from "./components/Pages/Tables/Animal";
+
 
 const AppRoutes = [
   {
@@ -20,6 +22,14 @@ const AppRoutes = [
   {
     path: '/sanctuaries',
     element: <Sanctuaries/>
+  },
+  {
+    path: '/sanctuaries/:id',
+    element: <Sanctuary/>
+  },
+  {
+    path: '/sanctuaries/:sanctuaryId/animals/:animalId',
+    element: <Animal/>
   }
 ];
 
