@@ -11,8 +11,8 @@ using Project1.Models;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231215160406_k")]
-    partial class k
+    [Migration("20231215232427_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,27 +28,20 @@ namespace Project1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
+                    b.Property<int>("AnimalId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("varchar(1)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Fio")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<double>("Salary")
-                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -64,17 +57,13 @@ namespace Project1.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Fio")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("varchar(1)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -182,97 +171,91 @@ namespace Project1.Migrations
                         {
                             Id = -1,
                             Hex = "#000000",
-                            Name = "Black"
+                            Name = "Черный"
                         },
                         new
                         {
                             Id = -2,
                             Hex = "#FFFFFF",
-                            Name = "White"
+                            Name = "Белый"
                         },
                         new
                         {
                             Id = -3,
                             Hex = "#FF0000",
-                            Name = "Red"
+                            Name = "Красный"
                         },
                         new
                         {
                             Id = -4,
                             Hex = "#00FF00",
-                            Name = "Green"
+                            Name = "Зеленый"
                         },
                         new
                         {
                             Id = -5,
                             Hex = "#0000FF",
-                            Name = "Blue"
+                            Name = "Синий"
                         },
                         new
                         {
                             Id = -6,
                             Hex = "#FFFF00",
-                            Name = "Yellow"
+                            Name = "Желтый"
                         },
                         new
                         {
                             Id = -7,
                             Hex = "#00FFFF",
-                            Name = "Cyan"
+                            Name = "Бирюзовый"
                         },
                         new
                         {
                             Id = -8,
                             Hex = "#FF00FF",
-                            Name = "Magenta"
+                            Name = "Малиновый"
                         },
                         new
                         {
                             Id = -9,
                             Hex = "#C0C0C0",
-                            Name = "Silver"
+                            Name = "Серебряный"
                         },
                         new
                         {
                             Id = -10,
                             Hex = "#808080",
-                            Name = "Gray"
+                            Name = "Серый"
                         },
                         new
                         {
                             Id = -11,
                             Hex = "#800000",
-                            Name = "Maroon"
+                            Name = "Бордовый"
                         },
                         new
                         {
                             Id = -12,
                             Hex = "#808000",
-                            Name = "Olive"
-                        },
-                        new
-                        {
-                            Id = -13,
-                            Hex = "#008000",
-                            Name = "Green"
+                            Name = "Оливковый"
                         },
                         new
                         {
                             Id = -14,
                             Hex = "#800080",
-                            Name = "Purple"
+                            Name = "Фиолетовый"
                         },
                         new
                         {
                             Id = -15,
                             Hex = "#008080",
-                            Name = "Teal"
+                            Name = "Морской"
                         },
                         new
                         {
                             Id = -16,
                             Hex = "#000080",
-                            Name = "Navy"
+                            Name = "Ультрамариновый"
                         });
                 });
 

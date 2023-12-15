@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Project1.Models.People;
 using Project1.Models.Structure;
 
 namespace Project1.Models.Templates;

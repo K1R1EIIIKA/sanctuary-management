@@ -40,15 +40,13 @@ namespace Project1.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(type: "longtext", nullable: false)
+                    Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "longtext", nullable: false)
+                    AnimalId = table.Column<int>(type: "int", nullable: false),
+                    Fio = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PhoneNumber = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Gender = table.Column<string>(type: "varchar(1)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Age = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -62,16 +60,14 @@ namespace Project1.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Salary = table.Column<double>(type: "double", nullable: false),
-                    FirstName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Gender = table.Column<string>(type: "varchar(1)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Age = table.Column<int>(type: "int", nullable: false)
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Salary = table.Column<double>(type: "double", nullable: false),
+                    Fio = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumber = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -117,16 +113,14 @@ namespace Project1.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Type = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     BirthDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsMale = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     HasDeviations = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     SanctuaryId = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     TangerineCount = table.Column<int>(type: "int", nullable: true),
                     Capybara_ColorId = table.Column<int>(type: "int", nullable: true),
                     Capybara_Height = table.Column<double>(type: "double", nullable: true),
@@ -155,22 +149,21 @@ namespace Project1.Migrations
                 columns: new[] { "Id", "Hex", "Name" },
                 values: new object[,]
                 {
-                    { -16, "#000080", "Navy" },
-                    { -15, "#008080", "Teal" },
-                    { -14, "#800080", "Purple" },
-                    { -13, "#008000", "Green" },
-                    { -12, "#808000", "Olive" },
-                    { -11, "#800000", "Maroon" },
-                    { -10, "#808080", "Gray" },
-                    { -9, "#C0C0C0", "Silver" },
-                    { -8, "#FF00FF", "Magenta" },
-                    { -7, "#00FFFF", "Cyan" },
-                    { -6, "#FFFF00", "Yellow" },
-                    { -5, "#0000FF", "Blue" },
-                    { -4, "#00FF00", "Green" },
-                    { -3, "#FF0000", "Red" },
-                    { -2, "#FFFFFF", "White" },
-                    { -1, "#000000", "Black" }
+                    { -16, "#000080", "Ультрамариновый" },
+                    { -15, "#008080", "Морской" },
+                    { -14, "#800080", "Фиолетовый" },
+                    { -12, "#808000", "Оливковый" },
+                    { -11, "#800000", "Бордовый" },
+                    { -10, "#808080", "Серый" },
+                    { -9, "#C0C0C0", "Серебряный" },
+                    { -8, "#FF00FF", "Малиновый" },
+                    { -7, "#00FFFF", "Бирюзовый" },
+                    { -6, "#FFFF00", "Желтый" },
+                    { -5, "#0000FF", "Синий" },
+                    { -4, "#00FF00", "Зеленый" },
+                    { -3, "#FF0000", "Красный" },
+                    { -2, "#FFFFFF", "Белый" },
+                    { -1, "#000000", "Черный" }
                 });
 
             migrationBuilder.CreateIndex(

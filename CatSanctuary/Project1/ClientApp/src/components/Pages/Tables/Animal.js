@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import Sanctuary from "./Sanctuary";
+import AnimalDetail from './AnimalDetail';
 
 const Animal = () => {
   const {sanctuaryId, animalId} = useParams();
   const [animal, setAnimal] = useState(null);
   const [color, setColor] = useState(null);
   const [showError, setShowError] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +44,7 @@ const Animal = () => {
 
     return day + '.' + month + '.' + date.getFullYear();
   }
-  
+
   function dateToAge(birthDate) {
     const date = new Date(birthDate);
     const now = new Date();
@@ -48,14 +52,38 @@ const Animal = () => {
 
     if (age === 0) {
       const month = now.getMonth() - date.getMonth();
-        if (month === 0) {
-            const day = now.getDate() - date.getDate();
-            return day < 5 ? day + ' дня' : day + ' дней';
-        }
-        return month < 5 ? month + ' месяца' : month + ' месяцев';
+      if (month === 0) {
+        const day = now.getDate() - date.getDate();
+        return day < 5 ? day + ' дня' : day + ' дней';
+      }
+      return month < 5 ? month + ' месяца' : month + ' месяцев';
     }
     return age < 5 ? age + ' года' : age + ' лет';
   }
+
+  const handleClaimClick = () => {
+    setShowForm(true);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`sanctuary/${sanctuaryId}/animal/${animalId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({phoneNumber, fullName}),
+      });
+      if (response.ok) {
+        window.location.href = `/sanctuaries/${sanctuaryId}`;
+      } else {
+        // Handle errors or show a message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div>
@@ -79,9 +107,74 @@ const Animal = () => {
                 <AnimalDetail title="Вес" value={animal.weight}/>
                 <AnimalDetail title="Рост" value={animal.height}/>
                 <AnimalDetail title="Есть отклонения" value={animal.hasDeviations ? 'Да' : 'Нет'}/>
-                
-                <button>
-                </button>
+
+                <div className={'row mb-4'}>
+                  <div className={'col-4'}></div>
+
+                  <button className={'btn btn-primary mt-3 col-3'} style={{height: '100%'}} onClick={handleClaimClick}>
+                    <h4>
+                      Забрать</h4>
+                  </button>
+                </div>
+
+                <div className={'row'}>
+                  <div className={'col-4'}></div>
+                  <div className={'col-4'}>
+                    {showForm && (
+                      <form onSubmit={handleSubmit}>
+                        <div>
+                          <label htmlFor="fullName" className={'form-label'}>ФИО:</label>
+                          <input
+                            type="text"
+                            id="fullName"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            required
+                            className={'input-group'}
+                            style={{width: '10em'}}
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="phoneNumber" className={'form-label'}>Номер телефона:</label>
+                          <input
+                            type="text"
+                            id="phoneNumber"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            required
+                            className={'input-group'}
+                            style={{width: '10em'}}
+                          />
+                          <label htmlFor="email" className={'form-label'}>Email:</label>
+                          <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className={'input-group'}
+                            style={{width: '10em'}}
+                          />
+                        </div>
+                        <button className={'btn btn-primary mt-4 mb-3'}
+                                onClick={() => {
+                                  fetch(`sanctuary/${sanctuaryId}/animal/${animalId}`, {
+                                    method: 'POST',
+                                    headers: {
+                                      'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({ phoneNumber, fullName, email }),
+                                  }).then(() => {
+                                    window.location.href = `/sanctuaries/${sanctuaryId}`;
+                                    });
+                                }}>
+                          Отправить
+                        </button>
+                      </form>
+                    )}
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
@@ -90,19 +183,5 @@ const Animal = () => {
     </div>
   );
 };
-
-function AnimalDetail({title, value}) {
-  return (
-    <div className="row">
-      <div className="col-3"></div>
-      <div className="col-3">
-        <h4 className="text-gilroy-extrabold">{title}:</h4>
-      </div>
-      <div className="col-6">
-        <h4 className="text-gilroy-medium">{value}</h4>
-      </div>
-    </div>
-  );
-}
 
 export default Animal;

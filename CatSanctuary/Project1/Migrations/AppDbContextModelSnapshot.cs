@@ -25,27 +25,20 @@ namespace Project1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
+                    b.Property<int>("AnimalId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("varchar(1)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Fio")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<double>("Salary")
-                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -61,17 +54,13 @@ namespace Project1.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Fio")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("varchar(1)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
