@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using Project1.Controllers.RequestModels;
 using Project1.Models.People;
 using Project1.Models.Structure;
 using Project1.Models.Templates;
@@ -51,7 +52,7 @@ public class SanctuaryController : ControllerBase
             TangerineCount = 150,
             ColorId = -1,
         };
-        
+
         Capybara newwCapybara = new Capybara
         {
             Name = "UniqueName" + Guid.NewGuid(),
@@ -74,7 +75,7 @@ public class SanctuaryController : ControllerBase
             IsMale = true,
             SanctuaryId = sanctuary.Id,
         };
-        
+
         _context.Sharks.Add(newShark);
 
         foreach (var animal in _context.Animals)
@@ -146,13 +147,6 @@ public class SanctuaryController : ControllerBase
 
         return capybara ?? shark ?? kiwi ?? cat ?? (ActionResult<object>)NotFound();
     }
-    
-    public class AnimalRequestModel
-    {
-        public string FullName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-    }
 
     [HttpPost("{id}/animal/{animalId}")]
     public ActionResult<object> TakeAnimal(int id, int animalId, [FromBody] AnimalRequestModel data)
@@ -163,13 +157,10 @@ public class SanctuaryController : ControllerBase
         {
             return NotFound();
         }
-        
+
         string phoneNumber = data.PhoneNumber;
         string fullName = data.FullName;
         string email = data.Email;
-        
-        Console.WriteLine(phoneNumber + "asdfgh");
-        Debug.WriteLine(phoneNumber + "asdfgh");
 
         var capybara = _context.Capybaras.FirstOrDefault(c => c.Id == animalId && c.SanctuaryId == id);
         var shark = _context.Sharks.FirstOrDefault(s => s.Id == animalId && s.SanctuaryId == id);
@@ -177,60 +168,39 @@ public class SanctuaryController : ControllerBase
         var cat = _context.Cats.FirstOrDefault(ct => ct.Id == animalId && ct.SanctuaryId == id);
 
         if (capybara != null)
-        {
-            Customer customer = CreateCustomer(fullName, phoneNumber, email);
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+            if (TakeAnimalLogic(phoneNumber, email, capybara, fullName)) return BadRequest();
+
+        if (shark != null)
+            if (TakeAnimalLogic(phoneNumber, email, shark, fullName)) return BadRequest();
             
-            customer.AnimalId = capybara.Id;
+        if (kiwi != null)
+            if (TakeAnimalLogic(phoneNumber, email, kiwi, fullName)) return BadRequest();
             
-            // set animal sanctuary id to 
-            capybara.SanctuaryId = -1;
-            _context.Sanctuaries.FirstOrDefault(s => s.Id == id).Animals.Remove(capybara);
-        }
-        else if (shark != null)
-        {
-            Customer customer = CreateCustomer(fullName, phoneNumber, email);
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-            
-            customer.AnimalId = shark.Id;
-            
-            shark.SanctuaryId = -1;
-            _context.Sanctuaries.FirstOrDefault(s => s.Id == id).Animals.Remove(shark);
-        }
-        else if (kiwi != null)
-        {
-            Customer customer = CreateCustomer(fullName, phoneNumber, email);
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-            
-            customer.AnimalId = kiwi.Id;
-            
-            kiwi.SanctuaryId = -1;
-            _context.Sanctuaries.FirstOrDefault(s => s.Id == id).Animals.Remove(kiwi);
-        }
-        else if (cat != null)
-        {
-            Customer customer = CreateCustomer(fullName, phoneNumber, email);
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-            
-            customer.AnimalId = cat.Id;
-            
-            cat.SanctuaryId = -1;
-            _context.Sanctuaries.FirstOrDefault(s => s.Id == id).Animals.Remove(cat);
-        }
+        if (cat != null)
+            if (TakeAnimalLogic(phoneNumber, email, cat, fullName)) return BadRequest();
+        
         else
-        {
             return NotFound();
-        }
 
         _context.SaveChanges();
 
         return Ok();
     }
-    
+
+    private bool TakeAnimalLogic(string phoneNumber, string email, Animal capybara, string fullName)
+    {
+        if (_context.Customers.Any(c => c.PhoneNumber == phoneNumber || c.Email == email || c.AnimalId == capybara.Id))
+            return true;
+
+        Customer customer = CreateCustomer(fullName, phoneNumber, email);
+        _context.Customers.Add(customer);
+        _context.SaveChanges();
+
+        customer.AnimalId = capybara.Id;
+
+        return false;
+    }
+
     private Customer CreateCustomer(string fullName, string phoneNumber, string email)
     {
         Customer customer = new Customer

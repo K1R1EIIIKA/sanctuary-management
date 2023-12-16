@@ -16,12 +16,44 @@ const Sanctuary = () => {
         const data = await response.json();
 
         setSanctuary(data);
+        
+        const customerResponse = await fetch(`customer`);
+        const customers = await customerResponse.json();
 
-        setCapybaras(data.animals.filter(animal => animal.type === 'Capybara'));
-        console.log(data.animals.filter(animal => animal.type === 'Shark'));
-        setCats(data.animals.filter(animal => animal.type === 'Cat'));
-        setSharks(data.animals.filter(animal => animal.type === 'Shark'));
-        setKiwis(data.animals.filter(animal => animal.type === 'Kiwi'));
+        const caps = data.animals.filter(animal => animal.type === 'Capybara');
+        const cts = data.animals.filter(animal => animal.type === 'Cat');
+        const shs = data.animals.filter(animal => animal.type === 'Shark');
+        const kws = data.animals.filter(animal => animal.type === 'Kiwi');
+        
+        customers.forEach(customer => {
+            caps.forEach(cap => {
+              console.log(customer.animalId, cap.id)
+              if (customer.animalId === cap.id) {
+                caps.splice(cap, 1);
+                console.log(caps)
+                }
+            });
+            cts.forEach(ct => {
+                if (customer.animalId === ct.id) {
+                    cts.splice(ct, 1);
+                }
+            });
+            shs.forEach(sh => {
+                if (customer.animalId === sh.id) {
+                    shs.splice(sh, 1);
+                }
+            });
+            kws.forEach(kw => {
+                if (customer.animalId === kw.id) {
+                    kws.splice(kw, 1);
+                }
+            });
+        });
+        
+        setCapybaras(caps);
+        setCats(cts);
+        setSharks(shs);
+        setKiwis(kws);
 
       } catch (error) {
         console.error('Error fetching sanctuary data:', error);
@@ -37,15 +69,15 @@ const Sanctuary = () => {
     <div>
       {sanctuary && (
         <div>
-          <h2 className={'text-center'}>Животные в приюте {sanctuary.name}</h2>
-          <h4 className={'text-center'}> Всего животных: {sanctuary.animalsCount}</h4>
+          <h2 className={'text-center text-montserrat'}>Животные в приюте {sanctuary.name}</h2>
+          <h4 className={'text-center text-gilroy-extrabold mb-4'}> Всего животных: {sanctuary.animalsCount}</h4>
 
           <div className={'row object-center'} style={{width: '90%'}}>
             <hr/>
-            {capybaras.length !== 0 && getCapybaras(sanctuary, capybaras)}
-            {cats.length !== 0 && getCats(sanctuary, cats)}
-            {sharks.length !== 0 && getSharks(sanctuary, sharks)}
-            {kiwis.length !== 0 && getKiwis(sanctuary, kiwis)}
+            {capybaras && capybaras.length !== 0 && getCapybaras(sanctuary, capybaras)}
+            {cats && cats.length !== 0 && getCats(sanctuary, cats)}
+            {sharks && sharks.length !== 0 && getSharks(sanctuary, sharks)}
+            {kiwis && kiwis.length !== 0 && getKiwis(sanctuary, kiwis)}
           </div>
 
         </div>
@@ -63,27 +95,18 @@ function dateToString(birthDate) {
 }
 
 const getCapybaras = (sanctuary, capybaras) => {
-  console.log(capybaras)
   return <div className={'col-6'}>
-    <h3 className={'text-center'}>Капибары</h3><br/>
+    <h3 className={'text-center text-gilroy-extrabold'}>Капибары</h3><br/>
     {capybaras.map(animal => (
       <div key={animal.id}> 
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
-          <h5 className={'text-center mb-3'}>{animal.name}</h5>
-          {/*<h6>{animal.id}</h6>*/}
-          <h6 className={'mb-1'}>Дата рождения: {dateToString(animal.birthDate)}</h6>
-          <h6 className={'mb-1'}>Цвет: {animal.color}</h6>
-          <h6 className={'mb-1'}>Пол: {animal.isMale ? 'Мужской' : 'Женский'}</h6>
-          <h6 className={'mb-1'}>Есть отклонения: {animal.hasDeviations ? 'Да' : 'Нет'}</h6>
+          <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {animal.color}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
+          <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
-        <button className={'btn btn-primary mt-2'} onClick={() => {
-          fetch(`sanctuary/${sanctuary.id}/animal/${animal.id}`, {
-            method: 'DELETE',
-          })
-        }}>
-          Забрать
-        </button>
-        <br/>
+
         <br/>
       </div>
     ))}
@@ -92,23 +115,17 @@ const getCapybaras = (sanctuary, capybaras) => {
 
 const getCats = (sanctuary, cats) => {
   return <div className={'col-6'}>
-    <h3 className={'text-center'}>Коты</h3><br/>
+    <h3 className={'text-center text-gilroy-extrabold'}>Коты</h3><br/>
     {cats.map(animal => (
       <div key={animal.id}>
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
-          <h5>{animal.name}</h5>
-          <h6>{animal.id}</h6>
-          <h6>Дата рождения: {dateToString(animal.birthDate)}</h6>
-          <h6>{animal.type}</h6>
+          <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {animal.color}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
+          <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
-        <button className={'btn btn-primary'} onClick={() => {
-          fetch(`sanctuary/${sanctuary.id}/animal/${animal.id}`, {
-            method: 'DELETE',
-          })
-        }}>
-          Забрать
-        </button>
-        <br/>
+
         <br/>
       </div>
     ))}
@@ -117,22 +134,17 @@ const getCats = (sanctuary, cats) => {
 
 const getSharks = (sanctuary, sharks) => {
   return <div className={'col-6'}>
-    <h3 className={'text-center'}>Акулы</h3><br/>
+    <h3 className={'text-center text-gilroy-extrabold'}>Акулы</h3><br/>
     {sharks.map(animal => (
       <div key={animal.id}>
-        <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}><h5>{animal.name}</h5>
-          <h6>{animal.id}</h6>
-          <h6>Дата рождения: {dateToString(animal.birthDate)}</h6>
-          <h6>{animal.type}</h6>
+        <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
+          <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {animal.color}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
+          <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
-        <button className={'btn btn-primary'} onClick={() => {
-          fetch(`sanctuary/${sanctuary.id}/animal/${animal.id}`, {
-            method: 'DELETE',
-          })
-        }}>
-          Забрать
-        </button>
-        <br/>
+
         <br/>
       </div>
     ))}
@@ -141,23 +153,16 @@ const getSharks = (sanctuary, sharks) => {
 
 const getKiwis = (sanctuary, kiwis) => {
   return <div className={'col-6'}>
-    <h3 className={'text-center'}>Киви</h3><br/>
+    <h3 className={'text-center text-gilroy-extrabold'}>Киви</h3><br/>
     {kiwis.map(animal => (
       <div key={animal.id}>
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
-          <h5>{animal.name}</h5>
-          <h6>{animal.id}</h6>
-          <h6>Дата рождения: {dateToString(animal.birthDate)}</h6>
-          <h6>{animal.type}</h6>
+          <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}>Дата рождения: {dateToString(animal.birthDate)}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}>Пол: {animal.isMale ? 'Мужской' : 'Женский'}</h5>
+          <h5 className={'text-gilroy-medium'}>Есть отклонения: {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
-        <button className={'btn btn-primary'} onClick={() => {
-          fetch(`sanctuary/${sanctuary.id}/animal/${animal.id}`, {
-            method: 'DELETE',
-          })
-        }}>
-          Забрать
-        </button>
-        <br/>
+
         <br/>
       </div>
     ))}

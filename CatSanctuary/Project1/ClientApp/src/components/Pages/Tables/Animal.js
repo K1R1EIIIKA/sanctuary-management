@@ -112,7 +112,7 @@ const Animal = () => {
                   <div className={'col-4'}></div>
 
                   <button className={'btn btn-primary mt-3 col-3'} style={{height: '100%'}} onClick={handleClaimClick}>
-                    <h4>
+                    <h4 className={'text-gilroy-extrabold'}>
                       Забрать</h4>
                   </button>
                 </div>
@@ -123,29 +123,30 @@ const Animal = () => {
                     {showForm && (
                       <form onSubmit={handleSubmit}>
                         <div>
-                          <label htmlFor="fullName" className={'form-label'}>ФИО:</label>
+                          <label htmlFor="fullName" className={'form-label fw-bold text-gilroy-medium'}>ФИО:</label>
                           <input
                             type="text"
                             id="fullName"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
                             required
-                            className={'input-group'}
-                            style={{width: '10em'}}
+                            className={'input-group mb-2'}
+                            style={{width: '12em'}}
                           />
                         </div>
                         <div>
-                          <label htmlFor="phoneNumber" className={'form-label'}>Номер телефона:</label>
+                          <label htmlFor="phoneNumber" className={'form-label fw-bold text-gilroy-medium'}>Номер
+                            телефона:</label>
                           <input
                             type="text"
                             id="phoneNumber"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                             required
-                            className={'input-group'}
-                            style={{width: '10em'}}
+                            className={'input-group mb-2'}
+                            style={{width: '12em'}}
                           />
-                          <label htmlFor="email" className={'form-label'}>Email:</label>
+                          <label htmlFor="email" className={'form-label fw-bold text-gilroy-medium'}>Email:</label>
                           <input
                             type="email"
                             id="email"
@@ -153,22 +154,22 @@ const Animal = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             className={'input-group'}
-                            style={{width: '10em'}}
+                            style={{width: '12em'}}
                           />
                         </div>
-                        <button className={'btn btn-primary mt-4 mb-3'}
+                        <button className={'btn btn-primary mt-3 mb-3 text-gilroy-extrabold'}
                                 onClick={() => {
                                   fetch(`sanctuary/${sanctuaryId}/animal/${animalId}`, {
                                     method: 'POST',
                                     headers: {
                                       'Content-Type': 'application/json',
                                     },
-                                    body: JSON.stringify({ phoneNumber, fullName, email }),
+                                    body: JSON.stringify({phoneNumber, fullName, email}),
                                   }).then(() => {
                                     window.location.href = `/sanctuaries/${sanctuaryId}`;
-                                    });
+                                  });
                                 }}>
-                          Отправить
+                          <h4>Отправить</h4>
                         </button>
                       </form>
                     )}

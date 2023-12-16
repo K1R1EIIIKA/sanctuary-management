@@ -1,26 +1,69 @@
 import React, { Component } from 'react';
+import {Sanctuaries} from "./Sanctuaries";
 
 export class Home extends Component {
   static displayName = Home.name;
 
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {sanctuaries: [], loading: true};
+  }
+
+  componentDidMount() {
+    this.populateSanctuaryData();
+  }
+
+  static renderSanctuariesTable(sanctuaries) {
     return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
+      <div className={'container'}>
+
+        <div className={'row'}>
+
+          <div className={'col-10 object-center'}>
+            <div className={'row'}>
+              <hr className={'mb-4'}/>
+              {sanctuaries.map(sanctuary =>
+                <div className={'col-6 object-center'}>
+                  <a className={'link'} href={'sanctuaries/' + sanctuary.id}>
+                    <h3 className={'text-center text-gilroy-extrabold'}>{sanctuary.name}</h3>
+                    <h5 className={'text-center text-gilroy-medium fw-bold'}>{sanctuary.address}</h5>
+                    <h5 className={'text-center text-gilroy-medium'}>{Sanctuaries.getAnimalCount(sanctuary)}</h5>
+                    <p className={'text-center text-gilroy-regular'}>{sanctuary.description}</p>
+                    <br/>
+                  </a>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </div>
+
       </div>
     );
+  }
+
+  render() {
+    let contents = this.state.loading
+      ? <p><em>Loading...</em></p>
+      : Sanctuaries.renderSanctuariesTable(this.state.sanctuaries);
+
+    return (
+      <div className={'container'}>
+        <h1 id="tabelLabel" className={'text-center text-montserrat mb-0'}>Лапки в Ладошке</h1><br/>
+        <h5 id="tabelLabel" className={'text-center text-gilroy-medium'}>Лапки в Ладошке - это сайт, который помогает найти дом для животных из приютов.</h5>
+        <h5 id="tabelLabel" className={'text-center text-gilroy-medium'}>На сайте представлены приюты, которые находятся в Москве и Московской области.</h5>
+        <h3 className={'text-center text-montserrat mt-5'}>Последние приюты</h3><br/>
+        {contents}
+      </div>
+    );
+  }
+
+  async populateSanctuaryData() {
+    const response = await fetch('sanctuary');
+    let data = await response.json();
+    
+    data.sort((a, b) => (a.animalsCount < b.animalsCount) ? 1 : -1);
+    data = data.slice(0, 6);
+    this.setState({sanctuaries: data, loading: false});
   }
 }

@@ -25,7 +25,7 @@ export class Sanctuaries extends Component {
                 <div className={'col-6 object-center'}>
                   <a className={'link'} href={'sanctuaries/' + sanctuary.id}>
                     <h3 className={'text-center text-gilroy-extrabold'}>{sanctuary.name}</h3>
-                    <h5 className={'text-center text-gilroy-medium'}>{sanctuary.address}</h5>
+                    <h5 className={'text-center text-gilroy-medium'}><b>{sanctuary.address}</b></h5>
                     <h5 className={'text-center text-gilroy-medium'}>{Sanctuaries.getAnimalCount(sanctuary)}</h5>
                     <p className={'text-center text-gilroy-regular'}>{sanctuary.description}</p>
                     <br/>

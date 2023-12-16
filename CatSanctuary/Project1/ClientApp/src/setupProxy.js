@@ -9,6 +9,7 @@ const context = [
   "/capybara",
   "/animalColor",
   "/sanctuary",
+  "/customer",
 ];
 
 module.exports = function (app) {
