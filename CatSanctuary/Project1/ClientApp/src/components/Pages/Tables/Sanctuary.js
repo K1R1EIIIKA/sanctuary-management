@@ -5,6 +5,8 @@ const Sanctuary = () => {
   const {id} = useParams();
   const [sanctuary, setSanctuary] = useState(null);
   const [capybaras, setCapybaras] = useState(null);
+  const [capybaraColors, setCapybaraColors] = useState(null);
+  const [animals, setAnimals] = useState(null);
   const [cats, setCats] = useState(null);
   const [sharks, setSharks] = useState(null);
   const [kiwis, setKiwis] = useState(null);
@@ -14,16 +16,24 @@ const Sanctuary = () => {
       try {
         const response = await fetch(`sanctuary/${id}`);
         const data = await response.json();
+        
+        const colorResponse = await fetch(`animalColor`);
+        const colorsList = await colorResponse.json();
+        setCapybaraColors(colorsList);
+        
+        const animalResponse = await fetch(`sanctuary/${id}/animal`);
+        const animals = await animalResponse.json();
+        setAnimals(animals);
 
-        setSanctuary(data);
+        setSanctuary(data);  
         
         const customerResponse = await fetch(`customer`);
         const customers = await customerResponse.json();
 
-        const caps = data.animals.filter(animal => animal.type === 'Capybara');
-        const cts = data.animals.filter(animal => animal.type === 'Cat');
-        const shs = data.animals.filter(animal => animal.type === 'Shark');
-        const kws = data.animals.filter(animal => animal.type === 'Kiwi');
+        const caps = animals.filter(animal => animal.type === 'Capybara');
+        const cts = animals.filter(animal => animal.type === 'Cat');
+        const shs = animals.filter(animal => animal.type === 'Shark');
+        const kws = animals.filter(animal => animal.type === 'Kiwi');
         
         customers.forEach(customer => {
             caps.forEach(cap => {
@@ -74,9 +84,9 @@ const Sanctuary = () => {
 
           <div className={'row object-center'} style={{width: '90%'}}>
             <hr/>
-            {capybaras && capybaras.length !== 0 && getCapybaras(sanctuary, capybaras)}
-            {cats && cats.length !== 0 && getCats(sanctuary, cats)}
-            {sharks && sharks.length !== 0 && getSharks(sanctuary, sharks)}
+            {capybaras && capybaras.length !== 0 && getCapybaras(sanctuary, capybaras, capybaraColors)}
+            {cats && cats.length !== 0 && getCats(sanctuary, cats, capybaraColors)}
+            {sharks && sharks.length !== 0 && getSharks(sanctuary, sharks, capybaraColors)}
             {kiwis && kiwis.length !== 0 && getKiwis(sanctuary, kiwis)}
           </div>
 
@@ -94,15 +104,18 @@ function dateToString(birthDate) {
   return day + '.' + month + '.' + date.getFullYear();
 }
 
-const getCapybaras = (sanctuary, capybaras) => {
+const getCapybaras = (sanctuary, capybaras, colors) => {
   return <div className={'col-6'}>
     <h3 className={'text-center text-gilroy-extrabold'}>Капибары</h3><br/>
     {capybaras.map(animal => (
       <div key={animal.id}> 
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
           <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
+          
           <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
-          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {animal.color}</h5>
+          {colors &&
+            <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {colors.find(color => color.id === animal.colorId).name}</h5>
+          }
           <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
           <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
@@ -113,7 +126,7 @@ const getCapybaras = (sanctuary, capybaras) => {
   </div>
 };
 
-const getCats = (sanctuary, cats) => {
+const getCats = (sanctuary, cats, colors) => {
   return <div className={'col-6'}>
     <h3 className={'text-center text-gilroy-extrabold'}>Коты</h3><br/>
     {cats.map(animal => (
@@ -132,7 +145,7 @@ const getCats = (sanctuary, cats) => {
   </div>
 };
 
-const getSharks = (sanctuary, sharks) => {
+const getSharks = (sanctuary, sharks, colors) => {
   return <div className={'col-6'}>
     <h3 className={'text-center text-gilroy-extrabold'}>Акулы</h3><br/>
     {sharks.map(animal => (

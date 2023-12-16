@@ -159,7 +159,7 @@ const Animal = () => {
                         </div>
                         <button className={'btn btn-primary mt-3 mb-3 text-gilroy-extrabold'}
                                 onClick={() => {
-                                  fetch(`sanctuary/${sanctuaryId}/animal/${animalId}`, {
+                                  fetch(`sanctuary/${sanctuaryId}/animal/${animalId}/take`, {
                                     method: 'POST',
                                     headers: {
                                       'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ namespace Project1.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AnimalColorController : ControllerBase
+public class AnimalColorController : ControllerBase, IControl<Color>
 {
     private readonly AppDbContext _context;
     private readonly ILogger<AnimalColorController> _logger;
@@ -24,7 +24,7 @@ public class AnimalColorController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public ActionResult<Color> Get(int id)
+    public ActionResult<Color> GetById(int id)
     {
         var color = _context.Colors.Find(id);
 

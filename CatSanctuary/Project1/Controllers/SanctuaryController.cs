@@ -17,7 +17,7 @@ namespace Project1.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SanctuaryController : ControllerBase
+public class SanctuaryController : ControllerBase, IControl<Sanctuary>
 {
     private readonly AppDbContext _context;
     private readonly ILogger<SanctuaryController> _logger;
@@ -44,7 +44,7 @@ public class SanctuaryController : ControllerBase
 
         Capybara newCapybara = new Capybara
         {
-            Name = "UniqueName" + Guid.NewGuid(),
+            Name = "Столешница",
             BirthDate = new DateTime(2019, 1, 1),
             SanctuaryId = sanctuary.Id,
             Weight = 10,
@@ -55,7 +55,7 @@ public class SanctuaryController : ControllerBase
 
         Capybara newwCapybara = new Capybara
         {
-            Name = "UniqueName" + Guid.NewGuid(),
+            Name = "Мандаринка",
             BirthDate = new DateTime(2019, 1, 1),
             SanctuaryId = sanctuary.Id,
             Weight = 10,
@@ -68,7 +68,7 @@ public class SanctuaryController : ControllerBase
 
         Shark newShark = new Shark
         {
-            Name = "UniqueName" + Guid.NewGuid(),
+            Name = "Акуленыш",
             BirthDate = new DateTime(2019, 1, 1),
             Length = 320,
             HasDeviations = false,
@@ -97,11 +97,24 @@ public class SanctuaryController : ControllerBase
         var sanctuary = _context.Sanctuaries
             .Include(s => s.Animals)
             .FirstOrDefault(s => s.Id == id);
-
+        
         if (sanctuary == null)
         {
             return NotFound();
         }
+        
+        var capybaras = _context.Capybaras.Where(c => c.SanctuaryId == id).ToList();
+        var sharks = _context.Sharks.Where(s => s.SanctuaryId == id).ToList();
+        var kiwis = _context.Kiwis.Where(k => k.SanctuaryId == id).ToList();
+        var cats = _context.Cats.Where(ct => ct.SanctuaryId == id).ToList();
+
+        var allAnimals = new List<Animal>();
+        allAnimals.AddRange(capybaras);
+        allAnimals.AddRange(sharks);
+        allAnimals.AddRange(kiwis);
+        allAnimals.AddRange(cats);
+        
+        sanctuary.Animals = allAnimals;
 
         return sanctuary;
     }
@@ -148,7 +161,7 @@ public class SanctuaryController : ControllerBase
         return capybara ?? shark ?? kiwi ?? cat ?? (ActionResult<object>)NotFound();
     }
 
-    [HttpPost("{id}/animal/{animalId}")]
+    [HttpPost("{id}/animal/{animalId}/take")]
     public ActionResult<object> TakeAnimal(int id, int animalId, [FromBody] AnimalRequestModel data)
     {
         var sanctuary = _context.Sanctuaries.FirstOrDefault(s => s.Id == id);

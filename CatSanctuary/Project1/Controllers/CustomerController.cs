@@ -7,7 +7,7 @@ namespace Project1.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CustomerController : ControllerBase
+public class CustomerController : ControllerBase, IControl<Customer>
 {
     private readonly AppDbContext _context;
     private readonly ILogger<CustomerController> _logger;
@@ -25,7 +25,7 @@ public class CustomerController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public ActionResult<Customer> Get(int id)
+    public ActionResult<Customer> GetById(int id)
     {
         var customer = _context.Customers.Find(id);
 
