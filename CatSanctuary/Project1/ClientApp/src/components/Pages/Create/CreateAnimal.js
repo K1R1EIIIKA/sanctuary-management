@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {Await} from "react-router-dom";
 
 const CreateAnimal = () => {
   const types = [
@@ -7,6 +8,13 @@ const CreateAnimal = () => {
     'Shark',
     'Kiwi'
   ]
+
+  const translations = {
+    'Capybara': 'Капибара',
+    'Cat': 'Кошка',
+    'Shark': 'Акула',
+    'Kiwi': 'Киви'
+  }
 
   const [sanctuaries, setSanctuaries] = useState(null);
   const [colors, setColors] = useState(null);
@@ -48,9 +56,9 @@ const CreateAnimal = () => {
     fetchData();
   }, []);
 
-  const handleCreateClick = () => {
+  const handleCreateClick = async () => {
     const newAnimal = {
-        sanctuaryId: sanctuaryId,
+      sanctuaryId: Number(sanctuaryId),
       type: animalType,
       name: animalName,
       birthDate: birthDate,
@@ -59,47 +67,49 @@ const CreateAnimal = () => {
     };
 
     if (animalType === 'Capybara') {
-      newAnimal.colorId = selectedColorId;
-      newAnimal.tangerineCount = tangerineCount;
-      newAnimal.weight = weight;
-      newAnimal.height = height;
+      newAnimal.colorId = Number(selectedColorId);
+      newAnimal.tangerineCount = Number(tangerineCount);
+      newAnimal.weight = Number(weight);
+      newAnimal.height = Number(height);
     }
 
     if (animalType === 'Kiwi') {
-      newAnimal.colorId = selectedColorId;
-      newAnimal.wingspan = wingspan;
-      newAnimal.kiwiCount = kiwiCount;
+      newAnimal.colorId = Number(selectedColorId);
+      newAnimal.wingspan = Number(wingspan);
+      newAnimal.kiwiCount = Number(kiwiCount);
     }
 
     if (animalType === 'Shark') {
-      newAnimal.colorId = selectedColorId;
-      newAnimal.length = length;
+      newAnimal.colorId = Number(selectedColorId);
+      newAnimal.length = Number(length);
     }
 
     if (animalType === 'Cat') {
-      newAnimal.colorId = selectedColorId;
-      newAnimal.weight = weight;
-      newAnimal.height = height;
+      newAnimal.colorId = Number(selectedColorId);
+      newAnimal.weight = Number(weight);
+      newAnimal.height = Number(height);
     }
 
-    console.log(newAnimal)
+    console.log(JSON.stringify(newAnimal))
 
-    // try {
-    //   const response = fetch(`api/animal/create`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({phoneNumber, fullName}),
-    //   });
-    //   if (response.ok) {
-    //     window.location.href = `/sanctuaries/${sanctuaryId}`;
-    //   } else {
-    //     // Handle errors or show a message
-    //   }
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
+    try {
+      const response = await fetch(`api/animal/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newAnimal),
+      });
+      
+      if (response.ok) {
+        console.log('Success!')
+        window.location.href = `/sanctuaries/${sanctuaryId}`;
+      } else {
+        // Handle errors or show a message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
 
@@ -139,7 +149,7 @@ const CreateAnimal = () => {
             id="colorSelect"
             onChange={(e) => setTangerineCount(e.target.value)}
             value={tangerineCount}>
-          </input><br/><br/>
+          </input><br/>
 
           <label htmlFor="colorSelect" className={'form-create'}>Введите рост:</label>
           <input
@@ -255,7 +265,7 @@ const CreateAnimal = () => {
             <option value="">Выберите тип</option>
             {types.map((type, index) => (
               <option key={index} value={type}>
-                {type}
+                {translations[type]}
               </option>
             ))}
           </select>
@@ -276,6 +286,15 @@ const CreateAnimal = () => {
               ))}
           </select>
           <br/>
+          <label htmlFor="nameInput" className={'form-create'}>Имя:</label>
+          <input
+            className={'text-gilroy-regular'}
+            type="text"
+            id="nameInput"
+            value={animalName}
+            onChange={(e) => setAnimalName(e.target.value)}
+          /><br/>
+
           <label htmlFor="birthDateInput" className={'form-create'}>Дата рождения:</label>
           <input
             className={'text-gilroy-regular'}

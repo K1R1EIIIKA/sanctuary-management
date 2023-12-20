@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Project1.Controllers.RequestModels;
 using Project1.Models;
+using Project1.Models.Animals;
 using Project1.Models.Templates;
 
 namespace Project1.Controllers;
@@ -43,11 +45,70 @@ public class AnimalController : ControllerBase, IControl<Animal>
     }
     
     [HttpPost("create")]
-    public ActionResult<Animal> Create(Animal animal)
+    public ActionResult<Animal> Create([FromBody] AnimalCreateRequestModel data)
     {
+        Animal animal = null;
+        switch (data.Type)
+        {
+            case "Capybara":
+                animal = new Capybara
+                {
+                    Name = data.Name,
+                    BirthDate = data.BirthDate,
+                    SanctuaryId = data.SanctuaryId,
+                    Weight = data.Weight,
+                    Height = data.Height,
+                    TangerineCount = data.TangerineCount,
+                    ColorId = data.ColorId,
+                    IsMale = data.IsMale,
+                    HasDeviations = data.HasDeviations,
+                };
+                break;
+            case "Kiwi":
+                animal = new Kiwi
+                {
+                    Name = data.Name,
+                    BirthDate = data.BirthDate,
+                    SanctuaryId = data.SanctuaryId,
+                    HasDeviations = data.HasDeviations,
+                    IsMale = data.IsMale,
+                    KiwiEaten = data.KiwiCount,
+                    Wingspan = data.Wingspan,
+                };
+                break;
+            case "Cat":
+                animal = new Cat
+                {
+                    Name = data.Name,
+                    BirthDate = data.BirthDate,
+                    SanctuaryId = data.SanctuaryId,
+                    Weight = data.Weight,
+                    Height = data.Height,
+                    ColorId = data.ColorId,
+                    IsMale = data.IsMale,
+                    HasDeviations = data.HasDeviations,
+                    
+                };
+                break;
+            case "Shark":
+                animal = new Shark
+                {
+                    Name = data.Name,
+                    BirthDate = data.BirthDate,
+                    SanctuaryId = data.SanctuaryId,
+                    HasDeviations = data.HasDeviations,
+                    IsMale = data.IsMale,
+                    Length = data.Length,
+                    ColorId = data.ColorId,
+                };
+                break;
+            default:
+                return BadRequest();
+        }
+
         _context.Animals.Add(animal);
         _context.SaveChanges();
 
-        return CreatedAtAction(nameof(GetById), new { id = animal.Id }, animal);
+        return Ok();
     }
 }
