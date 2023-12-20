@@ -5,7 +5,7 @@ using Project1.Models.Templates;
 namespace Project1.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class AnimalController : ControllerBase, IControl<Animal>
 {
     private readonly AppDbContext _context;

@@ -4,6 +4,7 @@ import {FetchData} from "./components/Pages/FetchData";
 import {Sanctuaries} from "./components/Pages/Sanctuaries";
 import Sanctuary from "./components/Pages/Tables/Sanctuary";
 import Animal from "./components/Pages/Tables/Animal";
+import Animals from "./components/Pages/Animals";
 
 
 const AppRoutes = [
@@ -14,6 +15,10 @@ const AppRoutes = [
   {
     path: '/counter',
     element: <Counter/>
+  },
+  {
+    path: '/animals',
+    element: <Animals/>
   },
   {
     path: '/fetch-data',

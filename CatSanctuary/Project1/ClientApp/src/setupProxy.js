@@ -5,11 +5,11 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:27544';
 
 const context = [
-  "/capybara",
-  "/animalColor",
-  "/sanctuary",
-  "/customer",
-  "/animal",
+  "/api/capybara",
+  "/api/animalColor",
+  "/api/sanctuary",
+  "/api/customer",
+  "/api/animal",
 ];
 
 module.exports = function (app) {

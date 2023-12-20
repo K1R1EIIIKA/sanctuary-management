@@ -13,21 +13,22 @@ const Sanctuary = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(111)
       try {
-        const response = await fetch(`sanctuary/${id}`);
+        const response = await fetch(`api/sanctuary/${id}`);
         const data = await response.json();
         
-        const colorResponse = await fetch(`animalColor`);
+        const colorResponse = await fetch(`api/animalColor`);
         const colorsList = await colorResponse.json();
         setCapybaraColors(colorsList);
         
-        const animalResponse = await fetch(`sanctuary/${id}/animal`);
+        const animalResponse = await fetch(`api/sanctuary/${id}/animal`);
         const animals = await animalResponse.json();
         setAnimals(animals);
 
         setSanctuary(data);  
         
-        const customerResponse = await fetch(`customer`);
+        const customerResponse = await fetch(`api/customer`);
         const customers = await customerResponse.json();
 
         const caps = animals.filter(animal => animal.type === 'Capybara');
@@ -37,7 +38,6 @@ const Sanctuary = () => {
         
         customers.forEach(customer => {
             caps.forEach(cap => {
-              console.log(customer.animalId, cap.id)
               if (customer.animalId === cap.id) {
                 caps.splice(cap, 1);
                 console.log(caps)
@@ -72,8 +72,6 @@ const Sanctuary = () => {
 
     fetchData();
   }, [id]);
-
-  console.log(sanctuary);
 
   return (
     <div>
@@ -134,7 +132,7 @@ const getCats = (sanctuary, cats, colors) => {
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
           <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
           <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
-          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {animal.color}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {colors.find(color => color.id === animal.colorId).name}</h5>
           <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
           <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
@@ -153,7 +151,7 @@ const getSharks = (sanctuary, sharks, colors) => {
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
           <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
           <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
-          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {animal.color}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Цвет:</b> {colors.find(color => color.id === animal.colorId).name}</h5>
           <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
           <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
@@ -171,9 +169,9 @@ const getKiwis = (sanctuary, kiwis) => {
       <div key={animal.id}>
         <a className={'link'} href={`sanctuaries/${sanctuary.id}/animals/${animal.id}`}>
           <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
-          <h5 className={'mb-1 text-gilroy-medium'}>Дата рождения: {dateToString(animal.birthDate)}</h5>
-          <h5 className={'mb-1 text-gilroy-medium'}>Пол: {animal.isMale ? 'Мужской' : 'Женский'}</h5>
-          <h5 className={'text-gilroy-medium'}>Есть отклонения: {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
+          <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
+          <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
         </a>
 
         <br/>

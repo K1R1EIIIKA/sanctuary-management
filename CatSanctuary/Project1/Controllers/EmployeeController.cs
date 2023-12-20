@@ -5,7 +5,7 @@ using Project1.Models.People;
 namespace Project1.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class EmployeeController : ControllerBase, IControl<Employee>
 {
     private readonly AppDbContext _context;

@@ -62,7 +62,7 @@ export class Sanctuaries extends Component {
   }
 
   async populateSanctuaryData() {
-    const response = await fetch('sanctuary');
+    const response = await fetch('api/sanctuary');
     const data = await response.json();
     this.setState({sanctuaries: data, loading: false});
   }

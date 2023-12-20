@@ -16,7 +16,7 @@ using Project1.Models.Templates;
 namespace Project1.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class SanctuaryController : ControllerBase, IControl<Sanctuary>
 {
     private readonly AppDbContext _context;
@@ -73,9 +73,34 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
             Length = 320,
             HasDeviations = false,
             IsMale = true,
+            ColorId = -10,
             SanctuaryId = sanctuary.Id,
         };
 
+        Cat cat = new Cat
+        {
+            Name = "Угарыш",
+            BirthDate = new DateTime(2019, 1, 1),
+            Height = 10,
+            Weight = 10,
+            HasDeviations = false,
+            IsMale = true,
+            SanctuaryId = sanctuary.Id,
+            ColorId = -3,
+        };
+
+        Kiwi kiwi = new Kiwi
+        {
+            Name = "Аепельсин",
+            BirthDate = new DateTime(2019, 1, 1),
+            KiwiEaten = 123456,
+            HasDeviations = true,
+            IsMale = false,
+            SanctuaryId = sanctuary.Id
+        };
+
+        _context.Kiwis.Add(kiwi);
+        _context.Cats.Add(cat);
         _context.Sharks.Add(newShark);
 
         foreach (var animal in _context.Animals)

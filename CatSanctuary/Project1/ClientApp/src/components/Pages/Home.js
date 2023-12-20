@@ -59,7 +59,7 @@ export class Home extends Component {
   }
 
   async populateSanctuaryData() {
-    const response = await fetch('sanctuary');
+    const response = await fetch('api/sanctuary');
     let data = await response.json();
     
     data.sort((a, b) => (a.animalsCount < b.animalsCount) ? 1 : -1);
