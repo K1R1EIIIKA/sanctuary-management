@@ -62,3 +62,9 @@ code {
 .text-montserrat {
     font-family: 'Montserrat ExtraBold', serif;
 }
+
+.form-create {
+    margin-bottom: 1em;
+    margin-right: 1em;
+    font-family: 'Gilroy ExtraBold', serif;
+}

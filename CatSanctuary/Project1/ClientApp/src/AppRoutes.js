@@ -1,10 +1,10 @@
 import {Home} from "./components/Pages/Home";
-import {Counter} from "./components/Pages/Counter";
-import {FetchData} from "./components/Pages/FetchData";
 import {Sanctuaries} from "./components/Pages/Sanctuaries";
 import Sanctuary from "./components/Pages/Tables/Sanctuary";
 import Animal from "./components/Pages/Tables/Animal";
 import Animals from "./components/Pages/Animals";
+import CreateSanctuary from "./components/Pages/Create/CreateSanctuary";
+import CreateAnimal from "./components/Pages/Create/CreateAnimal";
 
 
 const AppRoutes = [
@@ -13,20 +13,20 @@ const AppRoutes = [
     element: <Home/>
   },
   {
-    path: '/counter',
-    element: <Counter/>
-  },
-  {
     path: '/animals',
     element: <Animals/>
   },
   {
-    path: '/fetch-data',
-    element: <FetchData/>
+    path: '/animals/create',
+    element: <CreateAnimal/>
   },
   {
     path: '/sanctuaries',
     element: <Sanctuaries/>
+  },
+  {
+    path: '/sanctuaries/create',
+    element: <CreateSanctuary/>
   },
   {
     path: '/sanctuaries/:id',

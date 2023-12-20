@@ -47,14 +47,26 @@ const Animals = () => {
     }
     return age < 5 ? age + ' года' : age + ' лет';
   }
+  
+  const handleCreateClick = () => {
+    window.location.href = `/animals/create`;
+  }
 
   return (
     <div>
-        <h1 className={'text-center text-montserrat mb-4'}>Все животные</h1>
+      <div className="row">
+        <div className="col-3"></div>
+        <h1 className={'col-6 text-center text-montserrat mb-4'}>Все животные</h1>
+        <button 
+          className={'col-3 btn btn-primary object-center mb-4'} 
+          style={{height:'3em', width:'13em'}}
+          onClick={handleCreateClick}>
+          Добавить животное
+        </button>
+      </div>
       {animals && (
 
         <div className={'row object-center'} style={{width: '90%'}}>
-          {console.log(animals)}
           <hr className={'mb-4'}/>
           {animals.map(animal => (
             <div key={animal.id} className={'col-4 object-center'}>
@@ -62,9 +74,9 @@ const Animals = () => {
                 <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
 
                 <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
-                {/*{colors &&*/}
+                {/*{colors && */}
                 {/*  <h5 className={'mb-1 text-gilroy-medium'}>*/}
-                {/*    <b>Цвет:</b> {colors.find(color => color.id === animal.colorId).name}</h5>*/}
+                {/*    <b>Цвет:</b> {console.log(colors.find(color => color.id === animal.colorId))}</h5>*/}
                 {/*}*/}
                 <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
                 <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>

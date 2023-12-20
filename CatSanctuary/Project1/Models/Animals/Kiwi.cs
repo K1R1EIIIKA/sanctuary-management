@@ -7,5 +7,7 @@ namespace Project1.Models.Animals;
 
 public class Kiwi : Animal, IFlying
 {
+    public double Wingspan { get; set; }
+    
     public int KiwiEaten { get; set; }
 }

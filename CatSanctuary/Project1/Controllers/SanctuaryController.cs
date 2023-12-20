@@ -80,7 +80,7 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
         Cat cat = new Cat
         {
             Name = "Угарыш",
-            BirthDate = new DateTime(2019, 1, 1),
+            BirthDate = new DateTime(2023, 11, 1),
             Height = 10,
             Weight = 10,
             HasDeviations = false,
@@ -92,8 +92,9 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
         Kiwi kiwi = new Kiwi
         {
             Name = "Аепельсин",
-            BirthDate = new DateTime(2019, 1, 1),
+            BirthDate = new DateTime(2023, 12, 30),
             KiwiEaten = 123456,
+            Wingspan = 50,
             HasDeviations = true,
             IsMale = false,
             SanctuaryId = sanctuary.Id

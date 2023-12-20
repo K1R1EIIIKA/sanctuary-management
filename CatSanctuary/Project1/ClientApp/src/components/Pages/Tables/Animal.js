@@ -43,7 +43,7 @@ const Animal = () => {
   function dateToString(birthDate) {
     const date = new Date(birthDate);
     const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-    const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
+    const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
 
     return day + '.' + month + '.' + date.getFullYear();
   }
@@ -57,11 +57,11 @@ const Animal = () => {
       const month = now.getMonth() - date.getMonth();
       if (month === 0) {
         const day = now.getDate() - date.getDate();
-        return day < 5 ? day + ' дня' : day + ' дней';
+        return day !== 1 ? day < 5 ? day + ' дня' : day + ' дней' : day + ' день';
       }
-      return month < 5 ? month + ' месяца' : month + ' месяцев';
+      return month !== 1 ? month < 5 ? month + ' месяца' : month + ' месяцев' : month + ' месяц';
     }
-    return age < 5 ? age + ' года' : age + ' лет';
+    return age !== 1 ? age < 5 ? age + ' года' : age + 'лет' : age + ' год';
   }
 
   const handleClaimClick = () => {
@@ -267,6 +267,7 @@ const Animal = () => {
                 <AnimalDetail title="Возраст" value={dateToAge(animal.birthDate)}/>
                 <AnimalDetail title="Пол" value={animal.isMale ? 'Мужской' : 'Женский'}/>
                 <AnimalDetail title="Съедено киви" value={animal.kiwiEaten}/>
+                <AnimalDetail title="Размах крыла" value={animal.wingspan}/>
                 <AnimalDetail title="Есть отклонения" value={animal.hasDeviations ? 'Да' : 'Нет'}/>
 
                 <div className={'row mb-4'}>
