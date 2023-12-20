@@ -186,6 +186,22 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
 
         return capybara ?? shark ?? kiwi ?? cat ?? (ActionResult<object>)NotFound();
     }
+    
+    [HttpPost("create")]
+    public ActionResult<Sanctuary> Create([FromBody] SancruaryCreateRequestModel data)
+    {
+        Sanctuary sanctuary = new Sanctuary
+        {
+            Name = data.Name,
+            Description = data.Description,
+            Address = data.Address
+        };
+
+        _context.Sanctuaries.Add(sanctuary);
+        _context.SaveChanges();
+
+        return sanctuary;
+    }
 
     [HttpPost("{id}/animal/{animalId}/take")]
     public ActionResult<object> TakeAnimal(int id, int animalId, [FromBody] AnimalRequestModel data)

@@ -49,7 +49,7 @@ export class Sanctuaries extends Component {
   }
   
   static handleCreateClick = () => {
-    
+    window.location.href = `/sanctuaries/create`;
   }
 
   render() {
@@ -65,7 +65,7 @@ export class Sanctuaries extends Component {
           <button
             className={'col-3 btn btn-primary object-center mb-4'}
             style={{height:'3em', width:'13em'}}
-            onClick={this.handleCreateClick}>
+            onClick={Sanctuaries.handleCreateClick}>
             Добавить приют
           </button>
         </div>
