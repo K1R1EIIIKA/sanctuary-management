@@ -5,6 +5,7 @@ import Animal from "./components/Pages/Tables/Animal";
 import Animals from "./components/Pages/Animals";
 import CreateSanctuary from "./components/Pages/Create/CreateSanctuary";
 import CreateAnimal from "./components/Pages/Create/CreateAnimal";
+import About from "./components/Pages/About";
 
 
 const AppRoutes = [
@@ -35,6 +36,10 @@ const AppRoutes = [
   {
     path: '/sanctuaries/:sanctuaryId/animals/:animalId',
     element: <Animal/>
+  },
+  {
+    path: '/about',
+    element: <About/>
   }
 ];
 

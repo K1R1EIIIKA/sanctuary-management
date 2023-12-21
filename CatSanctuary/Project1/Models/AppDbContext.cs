@@ -14,11 +14,9 @@ public class AppDbContext : DbContext
     public DbSet<Shark> Sharks { get; set; }
     public DbSet<Capybara> Capybaras { get; set; }
 
-    public DbSet<Employee> Employees { get; set; }
     public DbSet<Customer> Customers { get; set; }
 
     public DbSet<Sanctuary> Sanctuaries { get; set; }
-    public DbSet<Event> Events { get; set; }
     public DbSet<Color> Colors { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

@@ -73,12 +73,27 @@ const Sanctuary = () => {
     fetchData();
   }, [id]);
 
+  const handleCreateClick = () => {
+    window.location.href = `/animals/create`;
+  }
+
   return (
     <div>
       {sanctuary && (
         <div>
-          <h2 className={'text-center text-montserrat'}>Животные в приюте {sanctuary.name}</h2>
-          <h4 className={'text-center text-gilroy-extrabold mb-4'}> Всего животных: {sanctuary.animalsCount}</h4>
+          <div className="row">
+            <div className="col-3"></div>
+            <h1 className={'col-6 text-center text-montserrat mb-4'}>Приют "{sanctuary.name}"</h1>
+            <button
+              className={'col-3 btn btn-primary object-center mb-4'}
+              style={{height: '3em', width: '13em'}}
+              onClick={handleCreateClick}>
+              Добавить животное
+            </button>
+          </div>
+          <h4 className={'text-center text-gilroy-extrabold'}> Всего животных: {sanctuary.animalsCount}</h4>
+          <h4 className={'text-center text-gilroy-extrabold mb-4'}>{sanctuary.address.length > 0 ? sanctuary.address : 'Адрес отсутствует'}</h4>
+            <h4 className={'text-center text-gilroy-regular mb-4'}>{sanctuary.description.length > 0 ? sanctuary.description : 'Описание отсутствует'}</h4>
 
           <div className={'row object-center'} style={{width: '90%'}}>
             <hr/>
