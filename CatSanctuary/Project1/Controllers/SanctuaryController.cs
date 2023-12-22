@@ -113,7 +113,7 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
         }
 
         _context.SaveChanges();
-
+        
         return _context.Sanctuaries.ToList();
     }
 
@@ -187,7 +187,6 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
         return capybara ?? shark ?? kiwi ?? cat ?? (ActionResult<object>)NotFound();
     }
     
-    // TODO: добавить адрес и описание к приютам, добавить добавление животного через сам приют
     [HttpPost("create")]
     public ActionResult<Sanctuary> Create([FromBody] SancruaryCreateRequestModel data)
     {

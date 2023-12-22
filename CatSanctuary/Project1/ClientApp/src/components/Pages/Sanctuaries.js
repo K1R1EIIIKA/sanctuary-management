@@ -42,6 +42,7 @@ export class Sanctuaries extends Component {
   }
 
   static getAnimalCount(sanctuary) {
+    console.log(sanctuary.animals)
     return sanctuary.animalsCount <= 0 ? 'нет прелестных потенциальных питомцев' :
       sanctuary.animalsCount === 1 ? sanctuary.animalsCount + ' прелестный потенциальный питомец' :
         sanctuary.animalsCount < 5 ? sanctuary.animalsCount + ' прелестных потенциальных питомца' :
@@ -54,7 +55,7 @@ export class Sanctuaries extends Component {
 
   render() {
     let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
+      ? <h3 className={'text-center'}><em>Loading...</em></h3>
       : Sanctuaries.renderSanctuariesTable(this.state.sanctuaries);
 
     return (
@@ -63,10 +64,10 @@ export class Sanctuaries extends Component {
           <div className="col-3"></div>
           <h1 className={'col-6 text-center text-montserrat mb-4'}>Все приюты</h1>
           <button
-            className={'col-3 btn btn-primary object-center mb-4'}
+            className={'col-3 btn btn-primary object-center mb-4 text-gilroy-extrabold'}
             style={{height:'3em', width:'13em'}}
             onClick={Sanctuaries.handleCreateClick}>
-            Добавить приют
+            <h5 className={'mb-0'}>Добавить приют</h5>
           </button>
         </div>
         

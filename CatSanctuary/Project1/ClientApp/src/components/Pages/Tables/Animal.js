@@ -12,6 +12,8 @@ const Animal = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,7 +31,7 @@ const Animal = () => {
             const color = await colorResponse.json();
             setColor(color);
           }
-
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -89,7 +91,7 @@ const Animal = () => {
   };
 
   const renderForm = () => {
-    return <div className={'row'}>
+    let content = <div className={'row'}>
       <div className={'col-4'}></div>
       <div className={'col-4'}>
         {showForm && (
@@ -148,6 +150,8 @@ const Animal = () => {
       </div>
 
     </div>
+
+    return loading ? <h3 className={'text-center'}><em>Loading...</em></h3> : content;
   }
 
   return (

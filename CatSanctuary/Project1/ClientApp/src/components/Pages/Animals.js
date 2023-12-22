@@ -4,6 +4,8 @@ const Animals = () => {
   const [animals, setAnimals] = useState(null);
   const [colors, setColors] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,11 +18,13 @@ const Animals = () => {
         const colorResponse = await fetch(`api/animalColor`);
         const colorsList = await colorResponse.json();
         setColors(colorsList);
+
+        setLoading(false);
       } catch (error) {
         console.error('Error:', error);
       }
     };
-    
+
     fetchData();
   }, []);
 
@@ -47,27 +51,15 @@ const Animals = () => {
     }
     return age < 5 ? age + ' года' : age + ' лет';
   }
-  
+
   const handleCreateClick = () => {
     window.location.href = `/animals/create`;
   }
 
-  return (
-    <div>
-      <div className="row">
-        <div className="col-3"></div>
-        <h1 className={'col-6 text-center text-montserrat mb-4'}>Все животные</h1>
-        <button 
-          className={'col-3 btn btn-primary object-center mb-4'} 
-          style={{height:'3em', width:'13em'}}
-          onClick={handleCreateClick}>
-          Добавить животное
-        </button>
-      </div>
+  const renderContent = () => {
+    let content = <div>
       {animals && (
-
         <div className={'row object-center'} style={{width: '90%'}}>
-          <hr className={'mb-4'}/>
           {animals.map(animal => (
             <div key={animal.id} className={'col-4 object-center'}>
               <a className={'link'} href={`sanctuaries/${animal.sanctuaryId}/animals/${animal.id}`}>
@@ -79,7 +71,8 @@ const Animals = () => {
                 {/*    <b>Цвет:</b> {console.log(colors.find(color => color.id === animal.colorId))}</h5>*/}
                 {/*}*/}
                 <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
-                <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}</h5>
+                <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}
+                </h5>
               </a>
 
               <br/>
@@ -89,7 +82,24 @@ const Animals = () => {
       )}
 
     </div>
-  )
+
+    return loading ? <h3 className={'text-center'}><em>Loading...</em></h3> : content;
+  }
+
+  return <div>
+    <div className="row">
+      <div className="col-3"></div>
+      <h1 className={'col-6 text-center text-montserrat mb-2'}>Все животные</h1>
+      <button
+        className={'col-3 btn btn-primary object-center mb-4 text-gilroy-extrabold'}
+        style={{height:'3em', width:'14em'}}
+        onClick={handleCreateClick}>
+        <h5 className={'mb-0'}>Добавить животное</h5>
+      </button>
+    </div>
+    <hr className={'mb-4'}/>
+    {renderContent()}
+  </div>
 }
 
 export default Animals;

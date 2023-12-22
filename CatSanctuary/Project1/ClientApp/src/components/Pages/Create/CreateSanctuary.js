@@ -32,7 +32,7 @@ const CreateSanctuary = () => {
 
       if (response.ok) {
         console.log('Success!')
-        // window.location.href = `/sanctuaries/${newSanctuary}`;
+        window.location.href = `/sanctuaries`;
       } else {
         // Handle errors or show a message
       }

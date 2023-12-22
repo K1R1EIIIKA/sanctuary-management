@@ -37,8 +37,7 @@ public class AppDbContext : DbContext
             .HasValue<Shark>("Shark")
             .HasValue<Capybara>("Capybara");
     }
-
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = "server=127.0.0.1;user=root;password=12345;database=cat_sanctuary";

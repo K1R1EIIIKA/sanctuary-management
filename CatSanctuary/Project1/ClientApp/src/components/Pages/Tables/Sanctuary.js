@@ -85,10 +85,10 @@ const Sanctuary = () => {
             <div className="col-3"></div>
             <h1 className={'col-6 text-center text-montserrat mb-4'}>Приют "{sanctuary.name}"</h1>
             <button
-              className={'col-3 btn btn-primary object-center mb-4'}
-              style={{height: '3em', width: '13em'}}
+              className={'col-3 btn btn-primary object-center mb-4 text-gilroy-extrabold'}
+              style={{height: '3em', width: '14em'}}
               onClick={handleCreateClick}>
-              Добавить животное
+              <h5 className={'mb-0'}>Добавить животное</h5>
             </button>
           </div>
           <h4 className={'text-center text-gilroy-extrabold'}> Всего животных: {sanctuary.animalsCount}</h4>

@@ -26,18 +26,18 @@ export class NavMenu extends Component {
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-4" container
                 light>
-          <NavbarBrand tag={Link} className={'link text-montserrat'} to="/">Лапки в Ладошке</NavbarBrand>
+          <NavbarBrand tag={Link} className={'link text-montserrat'} to="/"><h4 className={'mb-1 mt-1'}>Лапки в Ладошке</h4></NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2"/>
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem>
-                <NavLink tag={Link} className="text-dark text-gilroy-extrabold" to="/animals">Все животные</NavLink>
+                <NavLink tag={Link} className="text-dark text-gilroy-extrabold" to="/animals"><h5 className={'mb-0'}>Все животные</h5></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark text-gilroy-extrabold" to="/sanctuaries">Все приюты</NavLink>
+                <NavLink tag={Link} className="text-dark text-gilroy-extrabold" to="/sanctuaries"><h5 className={'mb-0'}>Все приюты</h5></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark text-gilroy-extrabold" to="/about">Все приюты</NavLink>
+                <NavLink tag={Link} className="text-dark text-gilroy-extrabold" to="/about"><h5 className={'mb-0'}>О нас</h5></NavLink>
               </NavItem>
             </ul>
           </Collapse>
