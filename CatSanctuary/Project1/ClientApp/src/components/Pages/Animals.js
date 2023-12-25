@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 
 const Animals = () => {
   const [animals, setAnimals] = useState(null);
-  const [colors, setColors] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -14,10 +13,6 @@ const Animals = () => {
         const data = await response.json();
         data.sort((a, b) => b.id - a.id);
         setAnimals(data);
-
-        const colorResponse = await fetch(`api/animalColor`);
-        const colorsList = await colorResponse.json();
-        setColors(colorsList);
 
         setLoading(false);
       } catch (error) {
@@ -36,22 +31,6 @@ const Animals = () => {
     return day + '.' + month + '.' + date.getFullYear();
   }
 
-  function dateToAge(birthDate) {
-    const date = new Date(birthDate);
-    const now = new Date();
-    const age = now.getFullYear() - date.getFullYear();
-
-    if (age === 0) {
-      const month = now.getMonth() - date.getMonth();
-      if (month === 0) {
-        const day = now.getDate() - date.getDate();
-        return day < 5 ? day + ' дня' : day + ' дней';
-      }
-      return month < 5 ? month + ' месяца' : month + ' месяцев';
-    }
-    return age < 5 ? age + ' года' : age + ' лет';
-  }
-
   const handleCreateClick = () => {
     window.location.href = `/animals/create`;
   }
@@ -66,13 +45,11 @@ const Animals = () => {
                 <h5 className={'text-center mb-3 text-gilroy-extrabold'}>{animal.name}</h5>
 
                 <h5 className={'mb-1 text-gilroy-medium'}><b>Дата рождения:</b> {dateToString(animal.birthDate)}</h5>
-                {/*{colors && */}
-                {/*  <h5 className={'mb-1 text-gilroy-medium'}>*/}
-                {/*    <b>Цвет:</b> {console.log(colors.find(color => color.id === animal.colorId))}</h5>*/}
-                {/*}*/}
+
                 <h5 className={'mb-1 text-gilroy-medium'}><b>Пол:</b> {animal.isMale ? 'Мужской' : 'Женский'}</h5>
-                <h5 className={'text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}
+                <h5 className={'mb-1 text-gilroy-medium'}><b>Есть отклонения:</b> {animal.hasDeviations ? 'Да' : 'Нет'}
                 </h5>
+                <h5 className={'text-gilroy-medium'}><b>Забрали:</b> {animal.isTaken ? 'Да' : 'Нет'}</h5>
               </a>
 
               <br/>

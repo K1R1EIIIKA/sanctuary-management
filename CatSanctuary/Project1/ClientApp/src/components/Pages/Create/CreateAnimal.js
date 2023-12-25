@@ -36,12 +36,15 @@ const CreateAnimal = () => {
 
   const [length, setLength] = useState('');
 
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
 
         const response = await fetch('api/sanctuary');
         const data = await response.json();
+        data.sort((a, b) => b.id - a.id);
         setSanctuaries(data);
 
         const response2 = await fetch('api/animalColor');
@@ -100,12 +103,12 @@ const CreateAnimal = () => {
         },
         body: JSON.stringify(newAnimal),
       });
-      
+
       if (response.ok) {
         console.log('Success!')
         window.location.href = `/sanctuaries/${sanctuaryId}`;
       } else {
-        // Handle errors or show a message
+        setError('Ошибка создания животного')
       }
     } catch (error) {
       console.error('Error:', error);
@@ -252,86 +255,86 @@ const CreateAnimal = () => {
     <div>
       <h1 className={'text-center text-montserrat mb-4'}>Новое животное</h1>
       <hr className={'mb-4'}/>
-      <div className="row">
-        <div className="col-4"></div>
-        <div className="col-6">
-          <label htmlFor="typeSelect" className={'form-create'}>Выберите тип животного:</label>
-          <select
-            className={'text-gilroy-regular'}
-            id="typeSelect"
-            onChange={(e) => setAnimalType(e.target.value)}
-            value={animalType}
-          >
-            <option value="">Выберите тип</option>
-            {types.map((type, index) => (
-              <option key={index} value={type}>
-                {translations[type]}
+      <div className="container">
+      <div className="col-lg-4 col-md-6 object-center">
+        <label htmlFor="typeSelect" className={'form-create'}>Выберите тип животного:</label>
+        <select
+          className={'text-gilroy-regular'}
+          id="typeSelect"
+          onChange={(e) => setAnimalType(e.target.value)}
+          value={animalType}
+        >
+          <option value="">Выберите тип</option>
+          {types.map((type, index) => (
+            <option key={index} value={type}>
+              {translations[type]}
+            </option>
+          ))}
+        </select>
+        <br/>
+        <label htmlFor="sanctuarySelect" className={'form-create'}>Выберите приют:</label>
+        <select
+          className={'text-gilroy-regular'}
+          id="sanctuarySelect"
+          onChange={(e) => setSanctuaryId(e.target.value)}
+          value={sanctuaryId}
+        >
+          <option value="">Выберите приют</option>
+          {sanctuaries &&
+            sanctuaries.map((sanctuary) => (
+              <option key={sanctuary.id} value={sanctuary.id}>
+                {sanctuary.name}
               </option>
             ))}
-          </select>
-          <br/>
-          <label htmlFor="sanctuarySelect" className={'form-create'}>Выберите приют:</label>
-          <select
-            className={'text-gilroy-regular'}
-            id="sanctuarySelect"
-            onChange={(e) => setSanctuaryId(e.target.value)}
-            value={sanctuaryId}
-          >
-            <option value="">Выберите приют</option>
-            {sanctuaries &&
-              sanctuaries.map((sanctuary) => (
-                <option key={sanctuary.id} value={sanctuary.id}>
-                  {sanctuary.name}
-                </option>
-              ))}
-          </select>
-          <br/>
-          <label htmlFor="nameInput" className={'form-create'}>Имя:</label>
-          <input
-            className={'text-gilroy-regular'}
-            type="text"
-            id="nameInput"
-            value={animalName}
-            onChange={(e) => setAnimalName(e.target.value)}
-          /><br/>
+        </select>
+        <br/>
+        <label htmlFor="nameInput" className={'form-create'}>Имя:</label>
+        <input
+          className={'text-gilroy-regular'}
+          type="text"
+          id="nameInput"
+          value={animalName}
+          onChange={(e) => setAnimalName(e.target.value)}
+        /><br/>
 
-          <label htmlFor="birthDateInput" className={'form-create'}>Дата рождения:</label>
+        <label htmlFor="birthDateInput" className={'form-create'}>Дата рождения:</label>
+        <input
+          className={'text-gilroy-regular'}
+          type="date"
+          id="birthDateInput"
+          value={birthDate}
+          onChange={(e) => setBirthDate(e.target.value)}
+        />
+        <br/>
+        <label className={'mb-1'}>
           <input
             className={'text-gilroy-regular'}
-            type="date"
-            id="birthDateInput"
-            value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
+            type="checkbox"
+            checked={hasDeviations}
+            onChange={(e) => setHasDeviations(e.target.checked)}
           />
-          <br/>
-          <label className={'mb-1'}>
-            <input
-              className={'text-gilroy-regular'}
-              type="checkbox"
-              checked={hasDeviations}
-              onChange={(e) => setHasDeviations(e.target.checked)}
-            />
-            <span className={'text-gilroy-extrabold'}>Есть отклонения</span>
-          </label>
-          <br/>
-          <label className={'mb-2'}>
-            <input
-              className={'text-gilroy-regular'}
-              type="checkbox"
-              checked={isMale}
-              onChange={(e) => setIsMale(e.target.checked)}
-            />
-            <span className={'text-gilroy-extrabold'}>Мужской пол</span>
-          </label>
-          <br/>
-          {colorSelect(animalType)}
-          {capybaraSelect(animalType)}
-          {kiwiSelect(animalType)}
-          {sharkSelect(animalType)}
-          {catSelect(animalType)}
-          <br/>
-          <button className={'btn btn-primary'} onClick={handleCreateClick}>Создать</button>
-        </div>
+          <span className={'text-gilroy-extrabold'}>Есть отклонения</span>
+        </label>
+        <br/>
+        <label className={'mb-2'}>
+          <input
+            className={'text-gilroy-regular'}
+            type="checkbox"
+            checked={isMale}
+            onChange={(e) => setIsMale(e.target.checked)}
+          />
+          <span className={'text-gilroy-extrabold'}>Мужской пол</span>
+        </label>
+        <br/>
+        {colorSelect(animalType)}
+        {capybaraSelect(animalType)}
+        {kiwiSelect(animalType)}
+        {sharkSelect(animalType)}
+        {catSelect(animalType)}
+        <br/>
+        <button className={'btn btn-primary'} onClick={handleCreateClick}>Создать</button>
+        {error && <h5 className={'text-danger text-gilroy-extrabold mt-4 text-center'}>{error}</h5>}
+      </div>
       </div>
     </div>
   );

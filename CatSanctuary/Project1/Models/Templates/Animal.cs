@@ -19,6 +19,8 @@ public class Animal
     
     public bool HasDeviations { get; set; }
     
+    public bool IsTaken { get; set; } = false;
+    
     [ForeignKey("Sanctuary")]
     public int SanctuaryId { get; set; }
     

@@ -14,5 +14,5 @@ public class Sanctuary
     
     public string Address { get; set; }
     
-    public int AnimalsCount => Animals.Count;
+    public int AnimalsCount => Animals.Count(x => !x.IsTaken);
 }

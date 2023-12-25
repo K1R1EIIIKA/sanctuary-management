@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import AnimalDetail from './AnimalDetail';
+import TakeButton from "./TakeButton";
+import CustomerDetails from "./CustomerDetails";
 
 const Animal = () => {
   const {sanctuaryId, animalId} = useParams();
   const [animal, setAnimal] = useState(null);
+  const [customer, setCustomer] = useState(null);
   const [color, setColor] = useState(null);
   const [showError, setShowError] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -13,11 +16,18 @@ const Animal = () => {
   const [email, setEmail] = useState('');
 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`api/sanctuary/${sanctuaryId}/animal/${animalId}`);
+
+        const customerResponse = await fetch(`api/customer`);
+        const customerData = await customerResponse.json();
+        const cus = customerData.filter(c => c.animalId === Number(animalId));
+        setCustomer(cus);
+        {console.log(cus)}
 
         if (response.status === 404) {
           setAnimal(null);
@@ -83,7 +93,7 @@ const Animal = () => {
       if (response.ok) {
         window.location.href = `/sanctuaries/${sanctuaryId}`;
       } else {
-        // Handle errors or show a message
+        setError('Ошибка');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -177,16 +187,18 @@ const Animal = () => {
                 <AnimalDetail title="Рост" value={animal.height}/>
                 <AnimalDetail title="Есть отклонения" value={animal.hasDeviations ? 'Да' : 'Нет'}/>
 
-                <div className={'row mb-4'}>
-                  <div className={'col-4'}></div>
+                {!animal.isTaken && (
+                  <div>
+                    <TakeButton onClaimClick={handleClaimClick}/>
 
-                  <button className={'btn btn-primary mt-3 col-3'} style={{height: '100%'}} onClick={handleClaimClick}>
-                    <h4 className={'text-gilroy-extrabold'}>
-                      Забрать</h4>
-                  </button>
-                </div>
-
-                {renderForm()}
+                    {renderForm()}
+                    {error && <h5 className={'alert alert-danger text-gilroy-extrabold'}>{error}</h5>}
+                  </div>
+                )}
+                
+                {animal.isTaken && (
+                  <CustomerDetails customer={customer}/>
+                )}
 
               </div>
             </div>
@@ -210,16 +222,17 @@ const Animal = () => {
                 <AnimalDetail title="Рост" value={animal.height}/>
                 <AnimalDetail title="Есть отклонения" value={animal.hasDeviations ? 'Да' : 'Нет'}/>
 
-                <div className={'row mb-4'}>
-                  <div className={'col-4'}></div>
+                {!animal.isTaken && (
+                  <div>
+                    <TakeButton onClaimClick={handleClaimClick}/>
 
-                  <button className={'btn btn-primary mt-3 col-3'} style={{height: '100%'}} onClick={handleClaimClick}>
-                    <h4 className={'text-gilroy-extrabold'}>
-                      Забрать</h4>
-                  </button>
-                </div>
-
-                {renderForm()}
+                    {renderForm()}
+                    {error && <h5 className={'alert alert-danger text-gilroy-extrabold'}>{error}</h5>}
+                  </div>
+                )}
+                {animal.isTaken && (
+                  <CustomerDetails customer={customer}/>
+                )}
 
               </div>
             </div>
@@ -242,16 +255,17 @@ const Animal = () => {
                 <AnimalDetail title="Длина" value={animal.length}/>
                 <AnimalDetail title="Есть отклонения" value={animal.hasDeviations ? 'Да' : 'Нет'}/>
 
-                <div className={'row mb-4'}>
-                  <div className={'col-4'}></div>
+                {!animal.isTaken && (
+                  <div>
+                    <TakeButton onClaimClick={handleClaimClick}/>
 
-                  <button className={'btn btn-primary mt-3 col-3'} style={{height: '100%'}} onClick={handleClaimClick}>
-                    <h4 className={'text-gilroy-extrabold'}>
-                      Забрать</h4>
-                  </button>
-                </div>
-
-                {renderForm()}
+                    {renderForm()}
+                    {error && <h5 className={'alert alert-danger text-gilroy-extrabold'}>{error}</h5>}
+                  </div>
+                )}
+                {animal.isTaken && (
+                  <CustomerDetails customer={customer}/>
+                )}
 
               </div>
             </div>
@@ -274,16 +288,17 @@ const Animal = () => {
                 <AnimalDetail title="Размах крыла" value={animal.wingspan}/>
                 <AnimalDetail title="Есть отклонения" value={animal.hasDeviations ? 'Да' : 'Нет'}/>
 
-                <div className={'row mb-4'}>
-                  <div className={'col-4'}></div>
+                {!animal.isTaken && (
+                  <div>
+                    <TakeButton onClaimClick={handleClaimClick}/>
 
-                  <button className={'btn btn-primary mt-3 col-3'} style={{height: '100%'}} onClick={handleClaimClick}>
-                    <h4 className={'text-gilroy-extrabold'}>
-                      Забрать</h4>
-                  </button>
-                </div>
-
-                {renderForm()}
+                    {renderForm()}
+                    {error && <h5 className={'alert alert-danger text-gilroy-extrabold'}>{error}</h5>}
+                  </div>
+                )}
+                {animal.isTaken && (
+                  <CustomerDetails customer={customer}/>
+                )}
 
               </div>
             </div>

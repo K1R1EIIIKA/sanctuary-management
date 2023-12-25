@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project1.Models;
 
@@ -10,9 +11,11 @@ using Project1.Models;
 namespace Project1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231225132035_ftghjk")]
+    partial class ftghjk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +48,51 @@ namespace Project1.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Project1.Models.Structure.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Description = "День рождения нашего приюта",
+                            Name = "День рождения"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Description = "День открытых дверей в нашем приюте",
+                            Name = "День открытых дверей"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Description = "Конкурс \"Самый красивый кот\" в нашем приюте",
+                            Name = "Конкурс \"Самый красивый кот\""
+                        },
+                        new
+                        {
+                            Id = -4,
+                            Description = "День волонтера в нашем приюте",
+                            Name = "День волонтера"
+                        });
+                });
+
             modelBuilder.Entity("Project1.Models.Structure.Sanctuary", b =>
                 {
                     b.Property<int>("Id")
@@ -59,11 +107,16 @@ namespace Project1.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId");
 
                     b.ToTable("Sanctuaries");
                 });
@@ -298,6 +351,13 @@ namespace Project1.Migrations
                     b.HasDiscriminator().HasValue("Shark");
                 });
 
+            modelBuilder.Entity("Project1.Models.Structure.Sanctuary", b =>
+                {
+                    b.HasOne("Project1.Models.Structure.Event", null)
+                        .WithMany("Sanctuaries")
+                        .HasForeignKey("EventId");
+                });
+
             modelBuilder.Entity("Project1.Models.Templates.Animal", b =>
                 {
                     b.HasOne("Project1.Models.Structure.Sanctuary", "Sanctuary")
@@ -307,6 +367,11 @@ namespace Project1.Migrations
                         .IsRequired();
 
                     b.Navigation("Sanctuary");
+                });
+
+            modelBuilder.Entity("Project1.Models.Structure.Event", b =>
+                {
+                    b.Navigation("Sanctuaries");
                 });
 
             modelBuilder.Entity("Project1.Models.Structure.Sanctuary", b =>

@@ -31,90 +31,15 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
     [HttpGet]
     public IEnumerable<Sanctuary> Get()
     {
-        Sanctuary sanctuary = new Sanctuary
-        {
-            Name = "Сапожок",
-            Animals = new List<Animal>(),
-            Description = "Самый лучший зоопарк в мире",
-            Address = "Москва, ул. Пушкина, дом Колотушкина"
-        };
-
-        _context.Sanctuaries.Add(sanctuary);
-        _context.SaveChanges();
-
-        Capybara newCapybara = new Capybara
-        {
-            Name = "Столешница",
-            BirthDate = new DateTime(2019, 1, 1),
-            SanctuaryId = sanctuary.Id,
-            Weight = 10,
-            Height = 10,
-            TangerineCount = 150,
-            ColorId = -1,
-        };
-
-        Capybara newwCapybara = new Capybara
-        {
-            Name = "Мандаринка",
-            BirthDate = new DateTime(2019, 1, 1),
-            SanctuaryId = sanctuary.Id,
-            Weight = 10,
-            Height = 10,
-            TangerineCount = 150,
-            ColorId = -1,
-        };
-        _context.Capybaras.Add(newCapybara);
-        _context.Capybaras.Add(newwCapybara);
-
-        Shark newShark = new Shark
-        {
-            Name = "Акуленыш",
-            BirthDate = new DateTime(2019, 1, 1),
-            Length = 320,
-            HasDeviations = false,
-            IsMale = true,
-            ColorId = -10,
-            SanctuaryId = sanctuary.Id,
-        };
-
-        Cat cat = new Cat
-        {
-            Name = "Угарыш",
-            BirthDate = new DateTime(2023, 11, 1),
-            Height = 10,
-            Weight = 10,
-            HasDeviations = false,
-            IsMale = true,
-            SanctuaryId = sanctuary.Id,
-            ColorId = -3,
-        };
-
-        Kiwi kiwi = new Kiwi
-        {
-            Name = "Аепельсин",
-            BirthDate = new DateTime(2023, 12, 30),
-            KiwiEaten = 123456,
-            Wingspan = 50,
-            HasDeviations = true,
-            IsMale = false,
-            SanctuaryId = sanctuary.Id
-        };
-
-        _context.Kiwis.Add(kiwi);
-        _context.Cats.Add(cat);
-        _context.Sharks.Add(newShark);
-
-        foreach (var animal in _context.Animals)
-        {
-            if (animal.SanctuaryId == sanctuary.Id)
-            {
-                sanctuary.Animals.Add(animal);
-            }
-        }
-
-        _context.SaveChanges();
+        var sanctuaries = _context.Sanctuaries.ToList();
         
-        return _context.Sanctuaries.ToList();
+        foreach (var sanctuary in sanctuaries)
+        {
+            var sanctuaryAnimals = _context.Animals.Where(a => a.SanctuaryId == sanctuary.Id).ToList();
+            sanctuary.Animals = sanctuaryAnimals;
+        }
+        
+        return sanctuaries;
     }
 
     [HttpGet("{id}")]
@@ -144,7 +69,7 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
 
         return sanctuary;
     }
-
+    
     [HttpGet("{id}/animal")]
     public ActionResult<IEnumerable<object>> GetAnimals(int id)
     {
@@ -249,6 +174,7 @@ public class SanctuaryController : ControllerBase, IControl<Sanctuary>
 
         Customer customer = CreateCustomer(fullName, phoneNumber, email);
         _context.Customers.Add(customer);
+        capybara.IsTaken = true;
         _context.SaveChanges();
 
         customer.AnimalId = capybara.Id;
